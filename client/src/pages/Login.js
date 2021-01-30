@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Google from "../images/Google.png";
 import "../styles/Login.css";
 import Button from "@material-ui/core/Button";
-import { GoogleLogin } from "react-google-login";
+//import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 
 const clientId =
@@ -22,16 +22,7 @@ const responseGoogle = (response) => {
 export const Login = () => {
   return (
     <div className="container">
-      <div className="Card">
-        <div className="loginCard">
-          <GoogleLogin
-            clientId={clientId}
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={"single_host_origin"}
-          />
-        </div>
+      <div className="loginCard">
       </div>
     </div>
   );
