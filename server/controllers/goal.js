@@ -45,9 +45,9 @@ export const createGoal = async (req, res) => {
 
 function sortByGoals(property){
   return function(a, b){
-    if(a[property] > b[property])
+    if(a[property] < b[property])
          return 1;
-    else if(a[property] < b[property])
+    else if(a[property] > b[property])
         return -1;
     return 0; 
   }
