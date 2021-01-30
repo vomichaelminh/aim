@@ -1,3 +1,5 @@
+import pkg from 'mongoose';
+const { isValidObjectId } = pkg;
 import Goal from "../models/goal.js";
 
 export const createGoal = async (req, res) => {
@@ -41,9 +43,26 @@ export const createGoal = async (req, res) => {
   }
 };
 
+function sortByGoals(property){
+  return function(a, b){
+    if(a[property] > b[property])
+         return 1;
+    else if(a[property] < b[property])
+        return -1;
+    return 0; 
+  }
+}
+
 export const getGoals = async (req, res) => {
   try {
-    const goals = await Goal.find();
+    let goals = await Goal.find();  // array of json documents
+    
+    // filter by !isCompletedEvent
+    goals = goals.filter(goal => !(goal.isCompletedEvent));
+    // sort by postDate, desc
+    // goals.forEach(something)
+    goals.sort(sortByGoals("postDate"));
+
     console.log(goals);
     res.status(200).json(goals);
   } catch (error) {
@@ -54,7 +73,8 @@ export const getGoals = async (req, res) => {
 export const getGoal = async (req, res) => {
   const { id } = req.params;
   try {
-    const goal = await Goal.find({ _id: id });
+    console.log(isValidObjectId(id));
+    const goal = await Goal.findById(id);
     res.status(200).json(goal);
   } catch (error) {
     res.status(404).json({ message: error.message });
