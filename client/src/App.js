@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Feed from './pages/Feed'
 import React from 'react'
+import committedGoals from './pages/committedGoals'
+import createdGoals from './pages/createdGoals'
 
 export const App = () => {
   return (
@@ -15,6 +17,8 @@ export const App = () => {
           <Route path="/profile" component={Profile} />
           <Route path="/home" component={Home} />
           <Route path="/feed" component={Feed} />
+          <Route path="/committedGoals" component={committedGoals} />
+          <Route path="/createdGoals" component={createdGoals} />
         </Switch>
       </Router>
     </div>
