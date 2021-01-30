@@ -1,4 +1,5 @@
 import express from "express";
+import auth from "../middleware/auth.js";
 
 import {
   createGoal,
@@ -11,18 +12,18 @@ import {
 const router = express.Router();
 
 // create a Goal
-router.post("/", createGoal);
+router.post("/", auth, createGoal);
 
 // get all user's Goals
-router.get("/", getGoals);
+router.get("/", auth, getGoals);
 
 // get a user's Goal
-router.get("/:id", getGoal);
+router.get("/:id", auth, getGoal);
 
 // edit a Goal
-router.patch("/:id", updateGoal);
+router.patch("/:id", auth, updateGoal);
 
 // delete a Goal
-router.delete("/:id", deleteGoal);
+router.delete("/:id", auth, deleteGoal);
 
 export default router;

@@ -45,6 +45,10 @@ const goalSchema = new mongoose.Schema({
     type: Boolean,
     // required: true,
   },
+  userId: {
+    type: String,
+    required: true,
+  },
 });
 
 const Goal = mongoose.model("Goal", goalSchema);

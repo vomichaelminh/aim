@@ -31,6 +31,7 @@ export const createGoal = async (req, res) => {
     endDate,
     isCompletedGoal,
     isTimedGoal,
+    userId: req.user,
   });
 
   try {
@@ -61,7 +62,19 @@ export const getGoal = async (req, res) => {
   }
 };
 
-export const updateGoal = async (req, res) => {};
+export const updateGoal = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, image, rating } = req.body;
+  const goal = await Goal.findOne({ userId: req.user, _id: id });
+  if (!goal) {
+    return res.status(400).json({
+      message: "No goal found with this ID that belongs to the current user.",
+    });
+  }
+  const updatedGoal = { title, description, image, rating, _id: id };
+  await Drama.findByIdAndUpdate(id, updatedGoal, { new: true });
+  res.json(updatedGoal);
+};
 
 export const deleteGoal = async (req, res) => {
   const { id } = req.params;
