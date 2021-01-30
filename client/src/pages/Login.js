@@ -22,9 +22,7 @@ const responseGoogle = (response) => {
 export const Login = () => {
   return (
     <div className="container">
-      <div className="loginCard">
-       
-      </div>
+      <div className="loginCard">Login</div>
     </div>
   );
 };

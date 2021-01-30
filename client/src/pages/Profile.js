@@ -3,7 +3,7 @@ import "../styles/Login.css";
 import "../styles/Profile.css";
 import Button from "@material-ui/core/Button";
 import FormGoalType from "../formComponents/FormGoalType.js";
-import FormSocialGood from "../FormSocialGood.js";
+import FormSocialGood from "../formComponents/FormSocialGood.js";
 import FormPersonalGoal from "../formComponents/FormPersonalGoal.js";
 
 class Profile extends React.Component {
@@ -45,6 +45,12 @@ class Profile extends React.Component {
     this.setState({ [input]: e.target.value });
   };
 
+  next = (value) => {
+    this.setState({
+      goalCategory: value,
+    });
+  };
+
   render() {
     const { step } = this.state;
     const { goalType, goalCategory } = this.state;
@@ -67,10 +73,7 @@ class Profile extends React.Component {
         return (
           <div className="container">
             <div>
-              <FormPersonalGoal />
-            </div>
-            <div className="nextButton">
-              <Button variant="contained">Next</Button>
+              <FormPersonalGoal prevStep={this.prevStep} />
             </div>
           </div>
         );
@@ -79,10 +82,7 @@ class Profile extends React.Component {
         return (
           <div className="container">
             <div>
-              <FormSocialGood />
-            </div>
-            <div className="nextButton">
-              <Button variant="contained">Next</Button>
+              <FormSocialGood prevStep={this.prevStep} />
             </div>
           </div>
         );
