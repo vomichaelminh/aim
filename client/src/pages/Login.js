@@ -22,14 +22,16 @@ const responseGoogle = (response) => {
 export const Login = () => {
   return (
     <div className="container">
-      <div className="loginCard">
-        <GoogleLogin
-          clientId={clientId}
-          buttonText="Login"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={"single_host_origin"}
-        />
+      <div className="Card">
+        <div className="loginCard">
+          <GoogleLogin
+            clientId={clientId}
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={"single_host_origin"}
+          />
+        </div>
       </div>
     </div>
   );

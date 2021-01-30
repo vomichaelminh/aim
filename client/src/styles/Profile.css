@@ -1,3 +1,45 @@
 .nextButton {
-  margin-left: 640px;
+  position: absolute;
+  right: 10vh;
+  bottom: 50vh;
+}
+
+.buttonContainer {
+  margin: auto;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.selectButton {
+  color: rgb(107, 107, 107);
+  font-weight: 600;
+  height: 80px;
+  width: 180px;
+  border-radius: 5px;
+  border-color: aliceblue;
+  background-color: aliceblue;
+  opacity: 80%;
+  font-size: 25px;
+  outline-style: none;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.selectButton:hover {
+  opacity: 100%;
+}
+
+h1 {
+  color: white;
+}
+
+.text {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.formContainer {
+  padding-top: 140px;
 }
