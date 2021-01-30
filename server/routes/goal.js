@@ -1,11 +1,11 @@
 import express from "express";
 
 import {
-  getGoals,
   createGoal,
-  deleteGoal,
-  updateGoal,
+  getGoals,
   getGoal,
+  updateGoal,
+  deleteGoal,
 } from "../controllers/goal.js";
 
 const router = express.Router();
@@ -14,15 +14,15 @@ const router = express.Router();
 router.post("/", createGoal);
 
 // get all user's Goals
-// router.get("/", getGoals);
+router.get("/", getGoals);
 
 // get a user's Goal
-// router.get("/:id", getGoal);
+router.get("/:id", getGoal);
 
 // edit a Goal
-// router.patch("/:id", updateGoal);
+router.patch("/:id", updateGoal);
 
 // delete a Goal
-// router.delete("/:id", deleteGoal);
+router.delete("/:id", deleteGoal);
 
 export default router;

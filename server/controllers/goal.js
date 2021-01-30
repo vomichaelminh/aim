@@ -40,3 +40,39 @@ export const createGoal = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+export const getGoals = async (req, res) => {
+  try {
+    const goals = await Goal.find();
+    console.log(goals);
+    res.status(200).json(goals);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getGoal = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const goal = await Goal.find({ _id: id });
+    res.status(200).json(goal);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const updateGoal = async (req, res) => {};
+
+export const deleteGoal = async (req, res) => {
+  const { id } = req.params;
+  const goal = await Goal.findOne({ _id: id });
+
+  if (!goal) {
+    return res.status(400).json({
+      message: "No goal found with this ID that belongs to the current user.",
+    });
+  }
+
+  await Goal.findByIdAndDelete(id);
+  res.json({ message: "Goal deleted successfully" });
+};

@@ -1,55 +1,55 @@
 import mongoose from "mongoose";
 
-const eventSchema = new mongoose.Schema({
+const goalSchema = new mongoose.Schema({
   eventId: {
     type: String,
-    required: true,
+    // required: true,
   },
   title: {
     type: String,
-    required: true,
+    // required: true,
   },
   posterId: {
     type: String,
-    required: true,
+    // required: true,
   },
   description: {
     type: String,
-    required: true,
+    // required: true,
   },
   category: {
     type: String,
-    required: true,
+    // required: true,
   },
   committers: {
     type: [String],
-    required: true,
+    // required: true,
   },
   numCommitters: {
     type: Number,
-    required: true,
+    // required: true,
   },
   startDate: {
     type: Number,
-    required: true,
+    // required: true,
   },
   endDate: {
     type: Number,
-    required: true,
+    // required: true,
   },
   isCompletedEvent: {
     type: Boolean,
-    required: true,
+    // required: true,
   },
   isTimedEvent: {
     type: Boolean,
-    required: true,
+    // required: true,
   },
 });
 
-const Event = mongoose.model("events", eventSchema);
+const Goal = mongoose.model("Goal", goalSchema);
 
-export default Event;
+export default Goal;
 
 // Events
 

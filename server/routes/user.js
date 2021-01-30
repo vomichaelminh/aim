@@ -1,22 +1,24 @@
 import express from "express";
+import auth from "../middleware/auth.js";
 
-import { createUser } from "../controllers/user.js";
+import {
+  registerUser,
+  loginUser,
+  tokenIsValid,
+  getUser,
+  deleteUser,
+} from "../controllers/user.js";
 
 const router = express.Router();
 
-// create a User
-router.post("/", createUser);
+router.post("/register", registerUser);
 
-// // get all user's Events
-// router.get("/", getEvents);
+router.post("/login", loginUser);
 
-// // get a user's Event
-// router.get("/:id", getEvent);
+router.delete("/delete", auth, deleteUser);
 
-// // edit a Event
-// router.patch("/:id", updateEvent);
+router.post("/tokenIsValid", tokenIsValid);
 
-// // delete a Event
-// router.delete("/:id", deleteEvent);
+router.get("/", auth, getUser);
 
 export default router;
