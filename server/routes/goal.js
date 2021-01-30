@@ -14,8 +14,11 @@ const router = express.Router();
 // create a Goal
 router.post("/", auth, createGoal);
 
+// get all Goals
+router.get("/", getGoals);
+
 // get all user's Goals
-router.get("/", auth, getGoals);
+// router.get("/", getUserGoals);
 
 // get a user's Goal
 router.get("/:id", auth, getGoal);

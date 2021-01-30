@@ -42,9 +42,19 @@ export const createGoal = async (req, res) => {
   }
 };
 
+function sortByGoals(property) {
+  return function (a, b) {
+    if (a[property] > b[property]) return 1;
+    else if (a[property] < b[property]) return -1;
+    return 0;
+  };
+}
+
 export const getGoals = async (req, res) => {
   try {
-    const goals = await Goal.find();
+    let goals = await Goal.find();
+    goals = goals.filter((goal) => !goal.isCompletedGoal);
+    goals.sort(sortByGoals("endDate"));
     console.log(goals);
     res.status(200).json(goals);
   } catch (error) {
