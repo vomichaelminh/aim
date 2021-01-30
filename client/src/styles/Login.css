@@ -1,0 +1,19 @@
+.container {
+  padding-top: 60px;
+  background-image: linear-gradient(#849ae6, #acc2ff);
+  height: 100vh;
+}
+
+.loginCard {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border-radius: 15px;
+  width: 70%;
+  height: 74%;
+}
+
+.Google-logo {
+  float: left;
+  width: 3vh;
+}
