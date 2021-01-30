@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const goalSchema = new mongoose.Schema({
-  eventId: {
+  goalId: {
     type: String,
     // required: true,
   },

@@ -1,102 +1,95 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../styles/NewEvent.css";
+import UserContext from "../context/UserContext";
+import axios from "axios";
+import { Title } from "@material-ui/icons";
 
-export default class createEvent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      startDate: "",
-      endDate: "",
-      description: "",
-      goals: "",
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+export default function CreateEvent(props) {
+  const [title, setTitle] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [goals, setGoals] = useState("");
 
-  handleChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-    this.setState({ [name]: value });
-  }
+  const { userData } = useContext(UserContext);
 
-  handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let tempEvent = {
-      name: this.state.name,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
-      description: this.state.description,
-      goals: this.state.goals,
-    };
-    console.log(tempEvent); //add functionality to add event
-    this.setState({
-      name: "",
-      startDate: "",
-      endDate: "",
-      description: "",
-      goals: "",
-    });
-  }
 
-  render() {
-    return (
-      <div className="background">
-        <div className="text">
-          <h1>Create New Event</h1>
-        </div>
-        <div>
-          <div className="formContainer">
-            <form onSubmit={this.handleSubmit}>
+    try {
+      const newGoal = {
+        title: title,
+        startDate: startDate,
+        endDate: endDate,
+        description: description,
+        goals: goals,
+      };
+      console.log(newGoal);
+      await axios.post("http://localhost:5000/goals", newGoal, {
+        headers: { "x-auth-token": userData.token },
+      });
+
+      console.log("Drama sucessfully added!");
+      window.location.href = "/feed";
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  return (
+    <div className="background">
+      <div className="text">
+        <h1>Create New Event</h1>
+      </div>
+      <div>
+        <div className="formContainer">
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name of Event"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <div>
               <input
-                type="text"
-                name="name"
-                placeholder="Name of Event"
-                value={this.state.name}
-                onChange={this.handleChange}
+                type="date"
+                name="startDate"
+                placeholder="Start Date"
+                className="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
               />
-              <div>
-                <input
-                  type="date"
-                  name="startDate"
-                  placeholder="Start Date"
-                  className="date"
-                  value={this.state.startDate}
-                  onChange={this.handleChange}
-                />
-                &nbsp;
-                <input
-                  type="date"
-                  name="endDate"
-                  placeholder="End Date"
-                  className="date"
-                  value={this.state.endDate}
-                  onChange={this.handleChange}
-                />
-              </div>
+              &nbsp;
               <input
-                type="text"
-                name="description"
-                placeholder="Event Description"
-                className="description"
-                value={this.state.description}
-                onChange={this.handleChange}
+                type="date"
+                name="endDate"
+                placeholder="End Date"
+                className="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
               />
-              <input
-                name="goals"
-                type="text"
-                placeholder="Goals"
-                className="goals"
-                value={this.state.goals}
-                onChange={this.handleChange}
-              />
-              <input type="submit" value="Submit" className="submitButton" />
-            </form>
-          </div>
+            </div>
+            <input
+              type="text"
+              name="description"
+              placeholder="Event Description"
+              className="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <input
+              name="goals"
+              type="text"
+              placeholder="Goals"
+              className="goals"
+              value={goals}
+              onChange={(e) => setGoals(e.target.value)}
+            />
+            <input type="submit" value="Submit" className="submitButton" />
+          </form>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
