@@ -18,7 +18,6 @@ import axios from "axios";
 
 function Copyright() {
   return (
-
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
@@ -27,7 +26,6 @@ function Copyright() {
       {new Date().getFullYear()}
       {"."}
     </Typography>
-
   );
 }
 
@@ -54,17 +52,21 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [passwordCheck, setPasswordCheck] = useState();
+  const [displayName, setDisplayName] = useState();
 
   const { setUserData } = useContext(UserContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const loginUser = { email, password };
-      const loginRes = await axios.post(
-        "http://localhost:5000/users/login",
-        loginUser
-      );
+      const newUser = { email, password, passwordCheck, displayName };
+      console.log(newUser);
+      await axios.post("http://localhost:5000/users/register", newUser);
+      const loginRes = await axios.post("http://localhost:5000/users/login", {
+        email,
+        password,
+      });
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
@@ -72,7 +74,7 @@ export default function Register() {
       localStorage.setItem("auth-token", loginRes.data.token);
       window.location.href = "/feed";
     } catch (err) {
-      console.log(err.message);
+      console.log(err.response.data);
     }
   };
   const classes = useStyles();
@@ -85,7 +87,7 @@ export default function Register() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Log In
+          Sign in
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
@@ -112,7 +114,18 @@ export default function Register() {
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
           />
-
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Retype Password"
+            type="password"
+            id="password"
+            onChange={(e) => setPasswordCheck(e.target.value)}
+            autoComplete="current-password"
+          />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -124,7 +137,7 @@ export default function Register() {
             color="primary"
             className={classes.submit}
           >
-            Log In
+            Sign In
           </Button>
           <Grid container>
             <Grid item xs>
