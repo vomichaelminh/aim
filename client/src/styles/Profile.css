@@ -8,7 +8,8 @@
   margin: auto;
   margin-top: 30px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  width: 80vh;
 }
 
 .selectButton {
@@ -34,12 +35,56 @@ h1 {
 }
 
 .text {
+  padding-top: 100px;
   margin: auto;
   display: flex;
   justify-content: center;
   font-family: "Courier New", Courier, monospace;
+  width: 100vh;
 }
 
 .formContainer {
   padding-top: 140px;
+}
+
+.formControl {
+  color: rgb(107, 107, 107);
+  font-weight: 600;
+  height: 40px;
+  width: 70px;
+  border-radius: 5px;
+  border-color: aliceblue;
+  background-color: rgb(199, 211, 221);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.formControl:hover {
+  opacity: 90%;
+}
+
+.buttonSecondary {
+  margin-top: 50px;
+  padding: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.options {
+  color: rgb(107, 107, 107);
+  font-weight: 600;
+  height: 50px;
+  width: 130px;
+  border-radius: 5px;
+  border-color: aliceblue;
+  background-color: aliceblue;
+  opacity: 80%;
+  font-size: 15px;
+  outline-style: none;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.options:focus {
+  color: rgb(59, 59, 59);
+  background-color: rgb(216, 223, 230);
+  opacity: 60%;
 }

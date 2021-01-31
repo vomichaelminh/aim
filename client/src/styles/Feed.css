@@ -1,0 +1,9 @@
+.navbar {
+  background-image: linear-gradient(#a0d9dd, #acc2ff);
+}
+.background {
+    background-image: linear-gradient(#a0d9dd, #acc2ff);
+    height: 100vh;
+    justify-content: center;
+  }
+  

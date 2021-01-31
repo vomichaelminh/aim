@@ -31,14 +31,14 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    paddingTop: theme.spacing(12),
+    paddingTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
   avatar: {
-    margin: theme.spacing(1),
     opacity: `80%`,
+    margin: theme.spacing(1),
     backgroundColor: theme.palette.primary.main,
   },
   form: {
@@ -58,17 +58,21 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [passwordCheck, setPasswordCheck] = useState();
+  const [displayName, setDisplayName] = useState();
 
   const { setUserData } = useContext(UserContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const loginUser = { email, password };
-      const loginRes = await axios.post(
-        "http://localhost:5000/users/login",
-        loginUser
-      );
+      const newUser = { email, password, passwordCheck, displayName };
+      console.log(newUser);
+      await axios.post("http://localhost:5000/users/register", newUser);
+      const loginRes = await axios.post("http://localhost:5000/users/login", {
+        email,
+        password,
+      });
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
@@ -76,7 +80,7 @@ export default function Register() {
       localStorage.setItem("auth-token", loginRes.data.token);
       window.location.href = "/feed";
     } catch (err) {
-      console.log(err.message);
+      console.log(err.response.data);
     }
   };
   const classes = useStyles();
@@ -86,7 +90,7 @@ export default function Register() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar} color="primary">
+          <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography
@@ -99,10 +103,11 @@ export default function Register() {
               fontSize: 30,
             }}
           >
-            LOG IN
+            SIGN UP
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
+              className={classes.inputField}
               variant="outlined"
               margin="normal"
               required
@@ -113,9 +118,9 @@ export default function Register() {
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
               autoFocus
-              className={classes.inputField}
             />
             <TextField
+              className={classes.inputField}
               variant="outlined"
               margin="normal"
               required
@@ -126,9 +131,20 @@ export default function Register() {
               id="password"
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
-              className={classes.inputField}
             />
-
+            <TextField
+              className={classes.inputField}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Retype Password"
+              type="password"
+              id="password"
+              onChange={(e) => setPasswordCheck(e.target.value)}
+              autoComplete="current-password"
+            />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -143,7 +159,7 @@ export default function Register() {
               color="primary"
               className={classes.submit}
             >
-              Log In
+              Sign Up
             </Button>
           </form>
         </div>

@@ -1,4 +1,4 @@
-import pkg from 'mongoose';
+import pkg from "mongoose";
 const { isValidObjectId } = pkg;
 import Goal from "../models/goal.js";
 import User from "../models/user.js";
@@ -6,15 +6,9 @@ import User from "../models/user.js";
 export const createGoal = async (req, res) => {
   let {
     title,
-    posterId,
     description,
-    category,
-    committers,
-    numCommitters,
     startDate,
     endDate,
-    isCompletedGoal,
-    isTimedGoal,
   } = req.body;
 
   if (!title) {
@@ -22,30 +16,40 @@ export const createGoal = async (req, res) => {
   }
 
   let postDate = Math.floor(Date.now() / 1000);
-  if (!committers || committers.length == 0) {
-    committers = [];
-    committers.push(posterId);
-    numCommitters = 1;
-  }
-
+  
+  let committers = [req.user];
+  let numCommitters = 1;
+  
+  let isTimedGoal = false;
+  let isCompletedGoal = false;
+  
   if (startDate || endDate) {
     isTimedGoal = true;
   } else {
     isTimedGoal = false;
   }
+  
+  let newStartDate = parseInt(
+    (new Date(startDate).getTime() / 1000).toFixed(0)
+  );
+  let newEndDate = parseInt((new Date(endDate).getTime() / 1000).toFixed(0));
 
   const newGoal = new Goal({
     title,
-    posterId,
     description,
     category,
     committers,
     numCommitters,
-    startDate: (startDate ? startDate : undefined),
-    endDate: (endDate ? endDate : undefined),
+    startDate: newStartDate,
+    endDate: newEndDate,
     isCompletedGoal,
     isTimedGoal,
     postDate,
+    committers,
+    numCommitters,
+    isCompletedGoal,
+    isTimedGoal,
+    userId: req.user,
   });
 
   try {
@@ -62,22 +66,33 @@ export const createGoal = async (req, res) => {
   }
 };
 
-function sortByGoals(property){
-  return function(a, b){
-    if(a[property] < b[property])
-         return 1;
-    else if(a[property] > b[property])
-        return -1;
-    return 0; 
-  }
+function sortByGoals(property) {
+  return function (a, b) {
+    if (a[property] < b[property]) return 1;
+    else if (a[property] > b[property]) return -1;
+    return 0;
+  };
 }
 
 export const getGoals = async (req, res) => {
   try {
-    let goals = await Goal.find();  // array of json documents
-    
-    goals = goals.filter(goal => !(goal.isCompletedEvent));
+    let goals = await Goal.find(); // array of json documents
+
+    goals = goals.filter((goal) => !goal.isCompletedEvent);
     goals.sort(sortByGoals("postDate"));
+
+    res.status(200).json(goals);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const getUserGoals = async (req, res) => {
+  try {
+    let goals = await Goal.find({ userId: req.user }); // array of json documents
+
+    // goals = goals.filter((goal) => !goal.isCompletedEvent);
+    // goals.sort(sortByGoals("postDate"));
 
     res.status(200).json(goals);
   } catch (error) {
@@ -98,23 +113,25 @@ export const getGoal = async (req, res) => {
 export const getRandomGoal = async (req, res) => {
   try {
     let goals = await Goal.find();
-    
-    goals = await goals.filter(goal => !(goal.isCompletedEvent));
+
+    goals = await goals.filter((goal) => !goal.isCompletedEvent);
     let random = Math.floor(Math.random() * goals.length);
     res.status(200).json(goals[random]);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
-}
+};
 
 export const updateGoal = async (req, res) => {
   const { id } = req.params;
   try {
-    let status = await Goal.updateOne({ _id: id }, [{ $set: req.body }])
+    let status = await Goal.updateOne({ _id: id }, [{ $set: req.body }]);
     if (!status.ok) {
-      res.status(403).json({ message: "No Goal acknowledged or matched. No update." });
+      res
+        .status(403)
+        .json({ message: "No Goal acknowledged or matched. No update." });
     } else {
-      res.json({message: "Goal updated successfully."});
+      res.json({ message: "Goal updated successfully." });
     }
   } catch (error) {
     res.status(404).json({ message: error.message });

@@ -41,6 +41,10 @@ const goalSchema = new mongoose.Schema({
     type: Boolean,
     // required: true,
   },
+  userId: {
+    type: String,
+    required: true,
+  },
   postDate: {
     type: Number,
     // required: true,
