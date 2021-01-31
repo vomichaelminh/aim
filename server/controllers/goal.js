@@ -1,10 +1,10 @@
 import pkg from 'mongoose';
 const { isValidObjectId } = pkg;
 import Goal from "../models/goal.js";
+import User from "../models/user.js";
 
 export const createGoal = async (req, res) => {
   const {
-    goalId,
     title,
     posterId,
     description,
@@ -21,8 +21,22 @@ export const createGoal = async (req, res) => {
     return res.status(400).json({ message: "You did not enter a title" });
   }
 
+  let postDate = Math.floor(Date.now() / 1000);
+
+  if (!(committers.find(posterId))) {
+    committers.push(posterId);
+  }
+  if (numCommitters == 0) {
+    numCommitters = 1;
+  }
+
+  if (startDate || endDate) {
+    isTimedGoal = true;
+  } else {
+    isTimedGoal = false;
+  }
+
   const newGoal = new Goal({
-    goalId,
     title,
     posterId,
     description,
@@ -33,11 +47,18 @@ export const createGoal = async (req, res) => {
     endDate,
     isCompletedGoal,
     isTimedGoal,
+    postDate,
   });
 
   try {
-    const savedGoal = await newGoal.save();
-    res.status(201).json(savedGoal);
+    const savedGoal = await newGoal.save(async function(err, doc) {
+      if (err) {
+        res.status(409).json({ message: err});
+      } else {
+        const status = await User.findByIdAndUpdate(posterId, { $push: {"committedEvents": doc._id, "createdEvents": doc._id}, $inc: {"numCommittedEvents": 1, "numCreatedEvents": 1}});
+        res.status(200).json({ doc: savedGoal, message: "User schema updated successfully"});
+      }
+    });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
