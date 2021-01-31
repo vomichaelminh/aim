@@ -1,9 +1,54 @@
 .navbar {
   background-image: linear-gradient(#a0d9dd, #acc2ff);
 }
+
 .background {
-    background-image: linear-gradient(#a0d9dd, #acc2ff);
-    height: 100vh;
-    justify-content: center;
-  }
-  
+  background-image: linear-gradient(#a0d9dd, #acc2ff);
+  height: 100vh;
+  justify-content: center;
+}
+
+.cardContainer {
+  padding: 40px;
+}
+
+.card {
+  padding: 20px;
+  background-color: white;
+  opacity: 70%;
+  margin: auto;
+  height: 80vh;
+  width: 80vh;
+  border-radius: 10px;
+  justify-content: center;
+  display: block;
+}
+
+.joinButton {
+  justify-self: center;
+  height: 35px;
+  background-color: #4b67b4;
+  opacity: 60%;
+  border-color: aliceblue;
+  border-radius: 30px;
+  color: white;
+  font-weight: 900;
+  font-size: 20;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.joinButton:hover {
+  opacity: 40%;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h4,
+h1,
+h2 {
+  font-family: "Courier New", Courier, monospace;
+}
