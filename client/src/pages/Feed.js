@@ -1,83 +1,89 @@
-import React, {useEffect, useState} from 'react'
-import Event from '../components/Event'
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import NavBar from '../components/NavBar'
+import React, { useEffect, useState } from "react";
+import Event from "../components/Event";
+import { ThemeProvider } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import NavBar from "../components/NavBar";
+import "../styles/Feed.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: 100,
+    padding: 80,
+    height: "100vh",
+    backgroundImage: "linear-gradient(#acc2ff, #a0d9dd)",
   },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: "center",
     color: theme.palette.text.secondary,
+  },
+  navbar: {
+    color: "white",
   },
 }));
 
-
-
-
 export const Feed = () => {
-    const classes = useStyles();
-    const [eventData, setEventData] = useState([{
-        eventId: "mamamia",
-        title: "Mama Mia's Soup Kitchen",
-        posterId: "a1b2c3d4e5",
-        description: "Help Mama Mia make soup for the homeless!",
-        category: "Social Good",
-        committers: ["crikey", "a1b2c3d4e5"],
-        numCommitters: 2,
-        startDate: 1611978748,
-        endDate: 1612065148,
-        isCompletedEvent: false,
-        isTimedEvent: true,
-      }, {
-        eventId: "luigi",
-            title: "Work out to become strong like Luigi",
-            posterId: "a1b2c3d4e5",
-            description: "Luigi strong",
-            category: "Personal",
-            committers: ["a1b2c3d4e5"],
-            numCommitters: 2,
-            startDate: 1611978748,
-            endDate: 1612065148,
-            isCompletedEvent: false,
-            isTimedEvent: true,
-      }, {
-        eventId: "luigi",
-            title: "Work out to become strong like Luigi",
-            posterId: "a1b2c3d4e5",
-            description: "Luigi strong",
-            category: "Personal",
-            committers: ["a1b2c3d4e5"],
-            numCommitters: 2,
-            startDate: 1611978748,
-            endDate: 1612065148,
-            isCompletedEvent: false,
-            isTimedEvent: true,
-      }, {
-        eventId: "luigi",
-            title: "Work out to become strong like Luigi",
-            posterId: "a1b2c3d4e5",
-            description: "Luigi strong",
-            category: "Personal",
-            committers: ["a1b2c3d4e5"],
-            numCommitters: 2,
-            startDate: 1611978748,
-            endDate: 1612065148,
-            isCompletedEvent: false,
-            isTimedEvent: true,
-      }]);
+  const classes = useStyles();
+  const [eventData, setEventData] = useState([
+    {
+      eventId: "mamamia",
+      title: "Mama Mia's Soup Kitchen",
+      posterId: "a1b2c3d4e5",
+      description: "Help Mama Mia make soup for the homeless!",
+      category: "Social Good",
+      committers: ["crikey", "a1b2c3d4e5"],
+      numCommitters: 2,
+      startDate: 1611978748,
+      endDate: 1612065148,
+      isCompletedEvent: false,
+      isTimedEvent: true,
+    },
+    {
+      eventId: "luigi",
+      title: "Work out to become strong like Luigi",
+      posterId: "a1b2c3d4e5",
+      description: "Luigi strong",
+      category: "Personal",
+      committers: ["a1b2c3d4e5"],
+      numCommitters: 2,
+      startDate: 1611978748,
+      endDate: 1612065148,
+      isCompletedEvent: false,
+      isTimedEvent: true,
+    },
+    {
+      eventId: "luigi",
+      title: "Work out to become strong like Luigi",
+      posterId: "a1b2c3d4e5",
+      description: "Luigi strong",
+      category: "Personal",
+      committers: ["a1b2c3d4e5"],
+      numCommitters: 2,
+      startDate: 1611978748,
+      endDate: 1612065148,
+      isCompletedEvent: false,
+      isTimedEvent: true,
+    },
+    {
+      eventId: "luigi",
+      title: "Work out to become strong like Luigi",
+      posterId: "a1b2c3d4e5",
+      description: "Luigi strong",
+      category: "Personal",
+      committers: ["a1b2c3d4e5"],
+      numCommitters: 2,
+      startDate: 1611978748,
+      endDate: 1612065148,
+      isCompletedEvent: false,
+      isTimedEvent: true,
+    },
+  ]);
 
-      
+  console.log(eventData);
 
-      console.log(eventData)
-    
-    
-    /*
+  /*
     setEventData(eventData.concat({
         eventId: "mamamia",
         title: "Mama Mia's Soup Kitchen",
@@ -121,33 +127,23 @@ export const Feed = () => {
       }))
       */
 
-    return (
-
-        
-        <div>
-
-            <NavBar/>
-            <div className={classes.root}>
-      <Grid container spacing={3}>
-      {eventData.map((user) => (
-          <Grid item xs={4}>
-        <Event data={user}/>
+  return (
+    <div>
+      <NavBar className={classes.navbar} />
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          {eventData.map((user) => (
+            <Grid item xs={4}>
+              <Event data={user} />
+            </Grid>
+          ))}
         </Grid>
-      ))}
-        
-      </Grid>
+      </div>
     </div>
-           
-            
-           
-     
-    
-        </div>
-    )
-}
+  );
+};
 
 export default Feed;
-
 
 /*
 

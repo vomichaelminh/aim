@@ -21,7 +21,6 @@ export default function GoalType(props) {
         <button className="selectButton" onClick={toPersonal}>
           Personal
         </button>
-        &nbsp;&nbsp;&nbsp;&nbsp;
         <button className="selectButton" onClick={toSocial}>
           Social
         </button>

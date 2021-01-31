@@ -22,7 +22,7 @@ export default function CreateEvent() {
 
   return (
     <div className="background">
-      <div className="text">
+      <div className="textNewEvent">
         <h1>Create New Event</h1>
       </div>
       <div>

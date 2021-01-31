@@ -8,7 +8,8 @@
   margin: auto;
   margin-top: 30px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  width: 80vh;
 }
 
 .selectButton {
@@ -34,10 +35,12 @@ h1 {
 }
 
 .text {
+  padding-top: 200px;
   margin: auto;
   display: flex;
   justify-content: center;
   font-family: "Courier New", Courier, monospace;
+  width: 100vh;
 }
 
 .formContainer {
