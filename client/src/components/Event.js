@@ -23,9 +23,10 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12,
-    alignItems: 'center', 
-    justifyContent:'center'
   },
+  spacing: {
+    textAlign: 'center'
+  }
 });
 
 const linkStyle = {
@@ -45,7 +46,8 @@ export default function Event(props) {
   return (
     <Card className={classes.root} style={cardStyle}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+
+        <Typography className={classes.title} color="textPrimary" variant="h1" component="h2" gutterBottom>
           {props.data.title}
         </Typography>
        

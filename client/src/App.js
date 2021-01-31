@@ -6,8 +6,8 @@ import Feed from "./pages/Feed";
 
 import Home from './pages/Home'
 import React, { useState, useEffect } from "react";
-import committedGoals from "./pages/committedGoals";
-import createdGoals from "./pages/createdGoals";
+import committedGoals from "./pages/committedGoalsFeed";
+import createdGoals from "./pages/createdGoalsFeed";
 import UserContext from "./context/UserContext";
 import Register from "./pages/Register";
 import axios from "axios";

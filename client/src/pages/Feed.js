@@ -57,7 +57,7 @@ export const Feed = () => {
       <div className={classes.root}>
         <Grid container spacing={3}>
           {goals.map((user) => (
-            <Grid item xs={4}>
+            <Grid key={user._id} item xs={4}>
               <Event data={user} />
               
             </Grid>
