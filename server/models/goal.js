@@ -49,6 +49,10 @@ const goalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  postDate: {
+    type: Number,
+    // required: true,
+  }
 });
 
 const Goal = mongoose.model("Goal", goalSchema);

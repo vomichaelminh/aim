@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Feed from "./pages/Feed";
 
-
+import Home from './pages/Home'
 import React, { useState, useEffect } from "react";
 import committedGoals from "./pages/committedGoals";
 import createdGoals from "./pages/createdGoals";
@@ -13,6 +12,7 @@ import UserContext from "./context/UserContext";
 import Register from "./pages/Register";
 import axios from "axios";
 import newEvent from "./pages/createEvent";
+import EventDescription from './components/EventDescription'
 
 
 export const App = () => {
@@ -64,6 +64,10 @@ export const App = () => {
             <Route path="/committedGoals" component={committedGoals} />
             <Route path="/createdGoals" component={createdGoals} />
             <Route path="/newevent" component={newEvent} />
+            <Route
+              path="/feed/:id"
+              render={(props) => <EventDescription {...props} />}
+            />
           </Switch>
         </UserContext.Provider>
 

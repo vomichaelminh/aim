@@ -1,41 +1,40 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import "../styles/Profile.css";
 
-export default class SocialGood extends React.Component {
-  next = (e) => {
+export default function SocialGood(props) {
+  const next = (e) => {
     e.preventDefault();
-    this.props.nextStep();
+    props.nextStep(); //TODO
   };
 
-  back = (e) => {
+  const back = (e) => {
     e.preventDefault();
-    this.props.prevStep();
+    props.prevStep();
   };
 
-  render() {
-    return (
-      <div className="formContainer">
-        <div className="text">
-          <h1>Social Good</h1>
-        </div>
-        <div className="buttonContainer">
-          <button className="options">Volunteer</button>
-          &nbsp;&nbsp;
-          <button className="options">Fundraising</button>
-          &nbsp;&nbsp;
-          <button className="options">Environmental</button>
-          &nbsp;&nbsp;
-          <button className="options">Other</button>
-        </div>
-        <div className="buttonSecondary">
-          <button className="formControl" onClick={this.back}>
-            Back
-          </button>
-          &nbsp;
-          <button className="formControl">Next</button>
-        </div>
+  return (
+    <div className="formContainer">
+      <div className="text">
+        <h1>Social Good</h1>
       </div>
-    );
-  }
+      <div className="buttonContainer">
+        <button className="options">Volunteer</button>
+        &nbsp;&nbsp;
+        <button className="options">Fundraising</button>
+        &nbsp;&nbsp;
+        <button className="options">Environmental</button>
+        &nbsp;&nbsp;
+        <button className="options">Other</button>
+      </div>
+      <div className="buttonSecondary">
+        <button className="formControl" onClick={back}>
+          Back
+        </button>
+        &nbsp;
+        <button className="formControl" onClick={next}>
+          Next
+        </button>
+      </div>
+    </div>
+  );
 }

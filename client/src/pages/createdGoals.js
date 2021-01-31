@@ -10,7 +10,9 @@ import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: 100,
+    padding: 80,
+    height: "100vh",
+    backgroundImage: "linear-gradient(#acc2ff, #a0d9dd)",
   },
   paper: {
     padding: theme.spacing(2),
