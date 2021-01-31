@@ -1,4 +1,4 @@
-<p align="center" width="50%">
+<p align="center" width="50%" marginBottom="50px">
   <img width="50%" src="https://i.ibb.co/nRQTvt1/aim.png">
 </p>
 
