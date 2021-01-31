@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const goalSchema = new mongoose.Schema({
-  eventId: {
-    type: String,
-    // required: true,
-  },
   title: {
     type: String,
     // required: true,
@@ -45,6 +41,10 @@ const goalSchema = new mongoose.Schema({
     type: Boolean,
     // required: true,
   },
+  postDate: {
+    type: Number,
+    // required: true,
+  }
 });
 
 const Goal = mongoose.model("Goal", goalSchema);

@@ -1,33 +1,31 @@
 import React from "react";
 import "../styles/Profile.css";
 
-export default class goalType extends React.Component {
-  toPersonal = (e) => {
+export default function GoalType(props) {
+  const toPersonal = (e) => {
     e.preventDefault();
-    this.props.nextPersonal();
+    props.nextPersonal();
   };
 
-  toSocial = (e) => {
+  const toSocial = (e) => {
     e.preventDefault();
-    this.props.nextSocial();
+    props.nextSocial();
   };
 
-  render() {
-    return (
-      <div className="formContainer">
-        <div className="text">
-          <h1>What is your goal?</h1>
-        </div>
-        <div className="buttonContainer">
-          <button className="selectButton" onClick={this.toPersonal}>
-            Personal
-          </button>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <button className="selectButton" onClick={this.toSocial}>
-            Social
-          </button>
-        </div>
+  return (
+    <div className="formContainer">
+      <div className="text">
+        <h1>What is your goal?</h1>
       </div>
-    );
-  }
+      <div className="buttonContainer">
+        <button className="selectButton" onClick={toPersonal}>
+          Personal
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="selectButton" onClick={toSocial}>
+          Social
+        </button>
+      </div>
+    </div>
+  );
 }
