@@ -92,7 +92,20 @@ export const getRandomGoal = async (req, res) => {
   }
 }
 
-export const updateGoal = async (req, res) => {};
+export const updateGoal = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let status = await Goal.updateOne({ _id: id }, [{ $set: req.body }])
+    console.log(status);
+    if (!status.ok) {
+      res.status(403).json({ message: "No Goal acknowledged or matched. No update." });
+    } else {
+      res.json({message: "Goal updated successfully."});
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 
 export const deleteGoal = async (req, res) => {
   const { id } = req.params;
