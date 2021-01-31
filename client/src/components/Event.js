@@ -19,25 +19,36 @@ const useStyles = makeStyles({
     transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: 545,
+    color: "#636363",
   },
   pos: {
-    marginBottom: 12,
+    fontSize: 13,
+    marginTop: 15,
+    marginBottom: 8,
   },
   spacing: {
     textAlign: "center",
+  },
+  attendees: {
+    fontSize: 13,
+    color: `grey`,
   },
 });
 
 const linkStyle = {
   textDecoration: "none",
+  color: "#548ab0",
+  fontSize: 11,
 };
 
 export default function Event(props) {
   const classes = useStyles();
 
   const cardStyle = {
-    backgroundColor: "#C4C4C4",
+    backgroundColor: "white",
+    opacity: "80%",
   };
 
   return (
@@ -58,11 +69,19 @@ export default function Event(props) {
         </Typography>
 
         {props.data.numCommitters ? (
-          <Typography variant="body2" component="p">
+          <Typography
+            className={classes.attendees}
+            variant="body2"
+            component="p"
+          >
             {props.data.numCommitters} attendees
           </Typography>
         ) : (
-          <Typography variant="body2" component="p">
+          <Typography
+            className={classes.attendees}
+            variant="body2"
+            component="p"
+          >
             0 attendees
           </Typography>
         )}

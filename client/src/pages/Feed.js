@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: 80,
-    height: "100vh",
+    paddingTop: 40,
     backgroundImage: "linear-gradient(#acc2ff, #a0d9dd)",
   },
   paper: {

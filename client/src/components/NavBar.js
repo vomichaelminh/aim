@@ -13,14 +13,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const useStyles = makeStyles({
-  navbarDisplayFlex: {
-    display: `flex`,
-    justifyContent: `space-between`,
-  },
   navDisplayFlex: {
     display: `flex`,
-    justifyContent: `space-between`,
-    fontSize: `10`,
+    justifyContent: `center`,
+    gap: `10px`,
   },
   linkText: {
     paddingRight: `40px`,
@@ -28,14 +24,16 @@ const useStyles = makeStyles({
     textDecoration: `none`,
     textTransform: `uppercase`,
     color: `grey`,
-    fontSize: `12`,
+    fontWeight: 545,
   },
   logout: {
     color: "grey",
   },
   toolbar: {
     backgroundColor: `white`,
-    color: `black`,
+  },
+  title: {
+    fontSize: 10,
   },
 });
 
@@ -57,7 +55,7 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar className={classes.toolbar}>
-        <Container maxWidth="xs" className={classes.navbarDisplayFlex}>
+        <Container>
           <List
             component="nav"
             aria-labelledby="main navigation"
@@ -65,7 +63,7 @@ const Header = () => {
           >
             {navLinks.map(({ title, path }) => (
               <a href={path} key={title} className={classes.linkText}>
-                <ListItemText primary={title} />
+                <ListItemText primary={title} className={classes.title} />
               </a>
             ))}
           </List>
