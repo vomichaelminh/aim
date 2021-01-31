@@ -6,7 +6,7 @@ import {
   List,
   ListItem,
   ListItemText,
-  Container
+  Container,
 } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,17 +14,17 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   navbarDisplayFlex: {
     display: `flex`,
-    justifyContent: `space-between`
+    justifyContent: `space-between`,
   },
   navDisplayFlex: {
     display: `flex`,
-    justifyContent: `space-between`
+    justifyContent: `space-between`,
   },
   linkText: {
     textDecoration: `none`,
     textTransform: `uppercase`,
-    color: `white`
-  }
+    color: `white`,
+  },
 });
 
 const navLinks = [
@@ -32,8 +32,12 @@ const navLinks = [
   { title: `My Committed Goals`, path: `/committedGoals` },
   { title: `My Created Goals`, path: `/createdGoals` },
   { title: `New Event`, path: `/newEvent` },
-
 ];
+
+const logOff = () => {
+  localStorage.setItem("auth-token", "");
+  window.location.href = "/";
+};
 
 const Header = () => {
   const classes = useStyles();
@@ -55,6 +59,7 @@ const Header = () => {
               </a>
             ))}
           </List>
+          <button onClick={logOff}> Log out</button>
         </Container>
       </Toolbar>
     </AppBar>

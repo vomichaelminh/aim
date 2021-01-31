@@ -5,10 +5,6 @@ import { Link } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import axios from "axios";
 
-
-   
-
-
 const Home = () => {
   const { userData } = useContext(UserContext);
 
@@ -27,7 +23,6 @@ const Home = () => {
 
   return (
     <div>
-  
       {userData.user ? (
         // Show Feed Page
 
@@ -35,36 +30,53 @@ const Home = () => {
       ) : (
         <div>
           <div className="background">
-          <div className="textHome">
-          <h1>Aim</h1>
-          <img
-          alt="rocket"
-          src={Rocket}
-          style={{
-            width: "60px",
-            height: "60px",
-            margin: "70px",
-            marginLeft: 20,
-            marginRight: 0,
-          }}
-        />
-      </div>
-      <div className="containerSecondary">
-        <h2>Achieve goals now with your local community</h2>
-        <div className="buttonContainerHome">
-          <button className="selectButtonHome">Join Now</button>
-          <button className="selectButtonHome">Sign In</button>
-        </div>
-      </div>
-    </div>
-          <Link to="/login">Log in</Link>
-          <Link to="/register">Register</Link>
+            <div className="textHome">
+              <h1>Aim</h1>
+              <img
+                alt="rocket"
+                src={Rocket}
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  margin: "70px",
+                  marginLeft: 20,
+                  marginRight: 0,
+                }}
+              />
+            </div>
+            <div className="containerSecondary">
+              <h2>Achieve goals now with your local community</h2>
+              <div className="buttonContainerHome">
+                <span className="selectButtonHome">
+                  {
+                    <Link
+                      style={{ color: "black", textDecoration: "none" }}
+                      to="/login"
+                    >
+                      Log in
+                    </Link>
+                  }
+                </span>
+                <span className="selectButtonHome">
+                  {
+                    <Link
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                      }}
+                      to="/register"
+                    >
+                      Register
+                    </Link>
+                  }
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 };
-
-
 
 export default Home;

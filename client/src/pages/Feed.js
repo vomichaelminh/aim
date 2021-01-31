@@ -10,7 +10,6 @@ import UserContext from "../context/UserContext";
 import axios from "axios";
 import "../styles/Feed.css";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,21 +43,14 @@ export const Feed = () => {
   }, [userData]);
   const classes = useStyles();
 
-  const logOff = () => {
-    localStorage.setItem("auth-token", "");
-    window.location.href = "/";
-  };
-
   return (
     <div>
-      <button onClick={logOff}> Log out</button>
       <NavBar />
       <div className={classes.root}>
         <Grid container spacing={3}>
           {goals.map((user) => (
             <Grid key={user._id} item xs={4}>
               <Event data={user} />
-              
             </Grid>
           ))}
         </Grid>
@@ -68,4 +60,3 @@ export const Feed = () => {
 };
 
 export default Feed;
-
