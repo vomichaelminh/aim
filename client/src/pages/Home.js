@@ -21,6 +21,13 @@ const Home = () => {
     getCurrentGoals();
   }, [userData]);
 
+  const gotoLogin = () => {
+    window.location.href = "/login";
+  };
+  const gotoRegister = () => {
+    window.location.href = "/register";
+  };
+
   return (
     <div>
       {userData.user ? (
@@ -47,29 +54,12 @@ const Home = () => {
             <div className="containerSecondary">
               <h2>Achieve goals now with your local community</h2>
               <div className="buttonContainerHome">
-                <span className="selectButtonHome">
-                  {
-                    <Link
-                      style={{ color: "black", textDecoration: "none" }}
-                      to="/login"
-                    >
-                      Log in
-                    </Link>
-                  }
-                </span>
-                <span className="selectButtonHome">
-                  {
-                    <Link
-                      style={{
-                        textDecoration: "none",
-                        color: "black",
-                      }}
-                      to="/register"
-                    >
-                      Register
-                    </Link>
-                  }
-                </span>
+                <button className="selectButtonHome" onClick={gotoRegister}>
+                  Join Now
+                </button>
+                <button className="selectButtonHome" onClick={gotoLogin}>
+                  Sign In
+                </button>
               </div>
             </div>
           </div>
