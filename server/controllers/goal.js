@@ -3,36 +3,42 @@ const { isValidObjectId } = pkg;
 import Goal from "../models/goal.js";
 
 export const createGoal = async (req, res) => {
-  const {
-    goalId,
+  let {
+    // goalId,
     title,
-    posterId,
+    // posterId,
     description,
-    category,
-    committers,
-    numCommitters,
+    // category,
+    // committers,
+    // numCommitters,
     startDate,
     endDate,
-    isCompletedGoal,
-    isTimedGoal,
+    // isCompletedGoal,
+    // isTimedGoal,
   } = req.body;
 
   if (!title) {
     return res.status(400).json({ message: "You did not enter a title" });
   }
 
+  let newStartDate = parseInt(
+    (new Date(startDate).getTime() / 1000).toFixed(0)
+  );
+  let newEndDate = parseInt((new Date(endDate).getTime() / 1000).toFixed(0));
+
   const newGoal = new Goal({
-    goalId,
+    // goalId,
     title,
-    posterId,
+    // posterId,
     description,
-    category,
-    committers,
-    numCommitters,
-    startDate,
-    endDate,
-    isCompletedGoal,
-    isTimedGoal,
+    // category,
+    // committers,
+    // numCommitters,
+    startDat: newStartDate,
+    endDate: newEndDate,
+    // isCompletedGoal,
+    // isTimedGoal,
+    userId: req.user,
   });
 
   try {

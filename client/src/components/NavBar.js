@@ -31,6 +31,7 @@ const navLinks = [
   { title: `Goals`, path: `/feed` },
   { title: `My Committed Goals`, path: `/committedGoals` },
   { title: `My Created Goals`, path: `/createdGoals` },
+  { title: `New Event`, path: `/newEvent` },
 
 ];
 

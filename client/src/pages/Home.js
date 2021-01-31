@@ -1,14 +1,43 @@
-import React, { useState } from "react";
 import Rocket from "../images/rocket.png";
 import "../styles/Home.css";
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import UserContext from "../context/UserContext";
+import axios from "axios";
 
-export default function Home() {
+
+   
+
+
+const Home = () => {
+  const { userData } = useContext(UserContext);
+
+  // grabs current goals if logged in user
+  useEffect(() => {
+    const getCurrentGoals = async () => {
+      if (userData.token) {
+        const goalRes = await axios.get("http://localhost:5000/goals", {
+          headers: { "x-auth-token": userData.token },
+        });
+        window.location.href = "/feed";
+      }
+    };
+    getCurrentGoals();
+  }, [userData]);
+
   return (
-    <div className="background">
-      <div className="textHome">
-        <h1>Aim</h1>
+    <div>
+  
+      {userData.user ? (
+        // Show Feed Page
 
-        <img
+        <h1 style={{ color: "black" }}>You are logged in</h1>
+      ) : (
+        <div>
+          <div className="background">
+          <div className="textHome">
+          <h1>Aim</h1>
+          <img
           alt="rocket"
           src={Rocket}
           style={{
@@ -28,5 +57,14 @@ export default function Home() {
         </div>
       </div>
     </div>
+          <Link to="/login">Log in</Link>
+          <Link to="/register">Register</Link>
+        </div>
+      )}
+    </div>
   );
-}
+};
+
+
+
+export default Home;

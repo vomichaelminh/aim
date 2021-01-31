@@ -1,5 +1,5 @@
+
 import Event from "../components/Event";
-import { ThemeProvider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -8,9 +8,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import axios from "axios";
-import "../styles/Feed.css";
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -22,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
-  },
-  navbar: {
-    color: "white",
   },
 }));
 
@@ -56,9 +50,8 @@ export const Feed = () => {
       <div className={classes.root}>
         <Grid container spacing={3}>
           {goals.map((user) => (
-            <Grid key={user._id} item xs={4}>
+            <Grid item xs={4}>
               <Event data={user} />
-              
             </Grid>
           ))}
         </Grid>
