@@ -7,12 +7,14 @@ import React from "react";
 import committedGoals from "./pages/committedGoals";
 import createdGoals from "./pages/createdGoals";
 import newEvent from "./pages/createEvent";
+import Home from "./pages/Home";
 export const App = () => {
   return (
     <div>
       <Router>
         <Switch>
-          <Route exact path="/" component={Login} />
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
           <Route path="/profile" component={Profile} />
           <Route path="/feed" component={Feed} />
           <Route path="/committedGoals" component={committedGoals} />
