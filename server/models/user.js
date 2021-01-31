@@ -24,6 +24,8 @@ const userSchema = new mongoose.Schema({
   committedEvents: { type: [String], required: false },
   numCommittedEvents: { type: Number, required: false },
   friends: { type: [String], required: true },
+  completedEvents: { type: [String], required: false},
+  numCompletedEvents: { type: Number, required: false}
 });
 
 const User = mongoose.model("users", userSchema);

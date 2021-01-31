@@ -194,9 +194,41 @@ export const uncommitGoal = async (req, res) => {
     if (!(userDoc.committedEvents.find(event => event == id))) {
       res.status(210).json({ message: "Already uncommitted to goal."});
     } else {
-    const user = await User.findByIdAndUpdate(req.user, { $pull: {"committedEvents": id}, $dec: {"numCommittedEvents" : 1}});
-    const goal = await Goal.findByIdAndUpdate(id, { $pull: { "committers": user._id }, $dec: { "numCommitters" : 1}}); 
+    const user = await User.findByIdAndUpdate(req.user, { $pull: {"committedEvents": id}, $inc: {"numCommittedEvents" : -1}});
+    const goal = await Goal.findByIdAndUpdate(id, { $pull: { "committers": user._id }, $inc: { "numCommitters" : -1}}); 
     res.status(200).json({ message: "Goal successfully uncommitted."});
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export const completeGoal = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const userDoc = await User.findById(req.user);
+    if (userDoc.completedEvents.find(event => event == id)) {
+      res.status(210).json({ message: "Already complete goal."});
+    } else {
+      const user = await User.findByIdAndUpdate(req.user, { $push: {"completedEvents": id}, $inc: {"numCompletedEvents" : 1}});
+      const goal = await Goal.findByIdAndUpdate(id, { $push: { "completers": user._id }, $inc: { "numCompleters" : 1}}); //look at later - id
+      res.status(200).json({ message: "Goal successfully completed."});
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export const uncompleteGoal = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const userDoc = await User.findById(req.user);
+    if (!(userDoc.completedEvents.find(event => event == id))) {
+      res.status(210).json({ message: "Already uncomplete goal."});
+    } else {
+    const user = await User.findByIdAndUpdate(req.user, { $pull: {"completedEvents": id}, $inc: {"numCompletedEvents" : -1}});
+    const goal = await Goal.findByIdAndUpdate(id, { $pull: { "completers": user._id }, $inc: { "numCompleters" : -1}}); 
+    res.status(200).json({ message: "Goal successfully uncompleted."});
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

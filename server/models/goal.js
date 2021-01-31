@@ -25,6 +25,14 @@ const goalSchema = new mongoose.Schema({
     type: Number,
     // required: true,
   },
+  completers: {
+    type: [String],
+    // required: false,
+  },
+  numCompleters: {
+    type: Number,
+    // required: false,
+  },
   startDate: {
     type: Number,
     // required: true,

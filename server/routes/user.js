@@ -10,7 +10,9 @@ import {
   getUserCommittedEvents,
   updateUser,
   commitGoal,
-  uncommitGoal
+  uncommitGoal,
+  completeGoal,
+  uncompleteGoal
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -32,5 +34,9 @@ router.get("/committedEvents", auth, getUserCommittedEvents);
 router.get("/commitGoal/:id", auth, commitGoal);
 
 router.get("/uncommitGoal/:id", auth, uncommitGoal);
+
+router.post("/completeGoal/:id", auth, completeGoal);
+
+router.post("/uncompleteGoal/:id", auth, uncompleteGoal);
 
 export default router;
