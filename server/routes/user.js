@@ -7,6 +7,7 @@ import {
   tokenIsValid,
   getUser,
   deleteUser,
+  updateUser,
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -18,6 +19,8 @@ router.post("/login", loginUser);
 router.delete("/delete", auth, deleteUser);
 
 router.post("/tokenIsValid", tokenIsValid);
+
+router.patch("/update", auth, updateUser);
 
 router.get("/", auth, getUser);
 

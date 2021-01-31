@@ -124,10 +124,28 @@ export const deleteUser = async (req, res) => {
   }
 };
 
+export const updateUser = async (req, res) => {
+  try {
+    const updatedUser = await User.findById(req.user);
+    let status = await User.updateOne({ _id: updatedUser._id }, [{ $set: req.body }])
+    if (!status.ok) {
+      res.status(403).json({ message: "No User acknowledged or matched. No update." });
+    } else {
+      res.json({ message: "User updated successfully." });
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const getUser = async (req, res) => {
-  const user = await User.findById(req.user);
-  res.json({
-    displayName: user.displayName,
-    id: user._id,
-  });
+  try {
+    const user = await User.findById(req.user);
+    res.json({
+      displayName: user.displayName,
+      id: user._id,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
