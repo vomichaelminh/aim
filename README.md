@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://ibb.co/DLwNyTM">
+  <img src="https://i.ibb.co/nRQTvt1/aim.png">
 </p>
 
 Web App allowing people to aim for their goals.
