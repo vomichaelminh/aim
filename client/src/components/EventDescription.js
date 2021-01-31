@@ -1,7 +1,7 @@
 import UserContext from "../context/UserContext";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-
+import "../styles/Feed.css";
 export const EventDescription = (props) => {
   const { goalId } = props.match.params;
 
@@ -24,9 +24,36 @@ export const EventDescription = (props) => {
     getCurrentGoals();
   }, [userData]);
   console.log(props);
+
   return (
-    <div>
-      <p>Hello</p>
+    <div className="background">
+      <div className="cardContainer">
+        <div className="card">
+          <h1 className="item" style={{ color: `black` }}>
+            Title
+          </h1>
+          <h4 className="item" style={{ color: `black` }}>
+            Is Completed
+          </h4>
+          <div style={{ display: `flex`, justifyContent: `space-around` }}>
+            <h4 className="item" style={{ color: `black` }}>
+              Start Date - End Date
+            </h4>
+          </div>
+          <h4 className="item" style={{ color: `black` }}>
+            Description
+          </h4>
+          <div
+            style={{
+              display: `flex`,
+              justifyContent: `center`,
+              marginTop: `200px`,
+            }}
+          >
+            <button className="joinButton">JOIN INITIATIVE</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
