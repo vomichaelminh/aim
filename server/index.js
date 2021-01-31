@@ -4,17 +4,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
-// testing auth
-// import { OAuth2Client } from "google-auth-library";
-// const client = new OAuth2Client(
-//   "1065315695970-i9fhvuus3sgaq27t0v385pgn0376qeco.apps.googleusercontent.com"
-// );
-
-// testing auth
-
 import userRoutes from "./routes/user.js";
 import goalRoutes from "./routes/goal.js";
-import User from "./models/user.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;

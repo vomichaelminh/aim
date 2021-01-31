@@ -10,6 +10,7 @@ We used React.js to build the front end using CSS and HTML and we used Javascrip
 
 
 Contributors: Sol Lee, Michael Minh Vo, Jerry Tan, Kelly Zheng, Joseph Gu
+
 ## Getting started
 
 The application is broken down into a client and server folder.

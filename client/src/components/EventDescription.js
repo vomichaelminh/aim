@@ -6,7 +6,7 @@ export const EventDescription = (props) => {
   const { goalId } = props.match.params;
 
   const { userData } = useContext(UserContext);
-  const [goals, setGoals] = useState([]);
+  const [goals, setGoals] = useState({});
 
   useEffect(() => {
     const getCurrentGoals = async () => {
@@ -18,31 +18,49 @@ export const EventDescription = (props) => {
           }
         );
         setGoals(goalRes.data);
-        console.log(goals);
       }
     };
     getCurrentGoals();
   }, [userData]);
   console.log(props);
 
+  useEffect(() => {
+    console.log(goals);
+  }, [goals]);
+
+  const onClick = async () => {
+    if (userData.token) {
+      const goalRes = await axios.get(
+        `http://localhost:5000/users/commitGoal/${goalId}`,
+        {
+          headers: { "x-auth-token": userData.token },
+        }
+      );
+      setGoals(goalRes.data);
+      window.location.href = "/feed";
+    }
+  };
+
   return (
     <div className="background">
       <div className="cardContainer">
-        <div className="card">
+        <div className="card" style={{ textAlign: "center" }}>
           <h1 className="item" style={{ color: `black` }}>
-            Title
+            {goals.title}
           </h1>
           <h4 className="item" style={{ color: `black` }}>
-            Is Completed
+            {goals.isCompletedEvent}
           </h4>
           <div style={{ display: `flex`, justifyContent: `space-around` }}>
             <h4 className="item" style={{ color: `black` }}>
-              Start Date - End Date
+              {goals.startDate ? ((new Date(goals.startDate * 1000)).getMonth() + 1) + "/" + (new Date(goals.startDate * 1000)).getDate() + "/" + (new Date(goals.startDate * 1000)).getFullYear() : "Start Date"} -{" "}
+              {goals.endDate ? ((new Date(goals.endDate * 1000)).getMonth() + 1) + "/" + (new Date(goals.endDate * 1000)).getDate() + "/" + (new Date(goals.endDate * 1000)).getFullYear() : "End Date"}
             </h4>
           </div>
           <h4 className="item" style={{ color: `black` }}>
-            Description
+            {goals.description}
           </h4>
+
           <div
             style={{
               display: `flex`,
@@ -50,8 +68,14 @@ export const EventDescription = (props) => {
               marginTop: `200px`,
             }}
           >
-            <button className="joinButton">JOIN INITIATIVE</button>
+            <button onClick={onClick} className="joinButton">
+              JOIN INITIATIVE
+            </button>
           </div>
+          <h4 className="item" style={{ color: `black` }}>
+            {goals.numCommitters ? goals.numCommitters : "0"} People have
+            committed to this goal!
+          </h4>
         </div>
       </div>
     </div>

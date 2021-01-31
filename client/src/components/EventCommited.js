@@ -1,4 +1,3 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -7,6 +6,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import UserContext from "../context/UserContext";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -43,8 +45,9 @@ const linkStyle = {
   fontSize: 11,
 };
 
-export default function Event(props) {
-  console.log(props);
+export default function EventCommitted(props) {
+  const goalId = props.data._id;
+  const { userData } = useContext(UserContext);
 
   const classes = useStyles();
 
@@ -53,9 +56,25 @@ export default function Event(props) {
     opacity: "80%",
   };
 
+  const onClick = async () => {
+    if (userData.token) {
+      await axios.get(`http://localhost:5000/users/uncommitGoal/${goalId}`, {
+        headers: { "x-auth-token": userData.token },
+      });
+
+      window.location.href = "/feed";
+    }
+  };
+
   return (
     <Card className={classes.root} style={cardStyle}>
       <CardContent>
+        <button
+          style={{ display: "flex", textAlign: "right" }}
+          onClick={onClick}
+        >
+          X
+        </button>
         <Typography
           className={classes.title}
           color="textPrimary"
