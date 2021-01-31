@@ -67,7 +67,7 @@ const Header = () => {
               </a>
             ))}
           </List>
-          <button onClick={logOff}> Log out</button>
+         
         </Container>
         <div>
           <IconButton onClick={logOff}>
