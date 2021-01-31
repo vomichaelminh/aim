@@ -1,5 +1,5 @@
-<p align="center" style= {{ width: `50%` }}>
-  <img src="https://i.ibb.co/nRQTvt1/aim.png" style= {{ width: `50%` }}>
+<p align="center" width="50%">
+  <img width="50%" src="https://i.ibb.co/nRQTvt1/aim.png">
 </p>
 
 Web App allowing people to aim for their goals.
