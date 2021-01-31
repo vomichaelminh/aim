@@ -1,49 +1,66 @@
 import pkg from "mongoose";
 const { isValidObjectId } = pkg;
 import Goal from "../models/goal.js";
+import User from "../models/user.js";
 
 export const createGoal = async (req, res) => {
   let {
-    // goalId,
     title,
-    // posterId,
     description,
-    // category,
-    // committers,
-    // numCommitters,
     startDate,
     endDate,
-    // isCompletedGoal,
-    // isTimedGoal,
   } = req.body;
 
   if (!title) {
     return res.status(400).json({ message: "You did not enter a title" });
   }
 
+  let postDate = Math.floor(Date.now() / 1000);
+  
+  let committers = [req.user];
+  let numCommitters = 1;
+  
+  let isTimedGoal = false;
+  let isCompletedGoal = false;
+  
+  if (startDate || endDate) {
+    isTimedGoal = true;
+  } else {
+    isTimedGoal = false;
+  }
+  
   let newStartDate = parseInt(
     (new Date(startDate).getTime() / 1000).toFixed(0)
   );
   let newEndDate = parseInt((new Date(endDate).getTime() / 1000).toFixed(0));
 
   const newGoal = new Goal({
-    // goalId,
     title,
-    // posterId,
     description,
-    // category,
-    // committers,
-    // numCommitters,
-    startDat: newStartDate,
+    category,
+    committers,
+    numCommitters,
+    startDate: newStartDate,
     endDate: newEndDate,
-    // isCompletedGoal,
-    // isTimedGoal,
+    isCompletedGoal,
+    isTimedGoal,
+    postDate,
+    committers,
+    numCommitters,
+    isCompletedGoal,
+    isTimedGoal,
     userId: req.user,
   });
 
   try {
-    const savedGoal = await newGoal.save();
-    res.status(201).json(savedGoal);
+    const savedGoal = await newGoal.save(async function(err, doc) {
+      if (err) {
+        res.status(409).json({ message: err});
+      } else {
+        const status = await User.findByIdAndUpdate(posterId, { $push: {"committedEvents": doc._id, "createdEvents": doc._id}, $inc: {"numCommittedEvents": 1, "numCreatedEvents": 1}});
+        res.status(200).json({ doc: savedGoal, message: "User schema updated successfully"});
+      }
+    });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -122,15 +139,29 @@ export const updateGoal = async (req, res) => {
 };
 
 export const deleteGoal = async (req, res) => {
-  const { id } = req.params;
-  const goal = await Goal.findOne({ _id: id });
+  try {
+    const { id } = req.params;
+    const goal = await Goal.findOne({ _id: id });
 
-  if (!goal) {
-    return res.status(400).json({
-      message: "No goal found with this ID that belongs to the current user.",
-    });
+    if (!goal) {
+      return res.status(400).json({
+        message: "No goal found with this ID that belongs to the current user.",
+      });
+    }
+
+    await Goal.findByIdAndDelete(id);
+
+    const committers = goal.committers;
+    const posterId = goal.posterId;
+
+    await Promise.all(committers.map(async (committer) => {
+      await User.findByIdAndUpdate(committer, {$pull: {"committedEvents": id}, $inc: {"numCommittedEvents": -1}});
+    }));
+
+    await User.findByIdAndUpdate(posterId, {$pull: {"createdEvents": id}, $inc: {"numCreatedEvents": -1}});
+
+    res.json({ message: "Goal deleted successfully" });
+  } catch (err) {
+    res.status(400).json({message: err.message});
   }
-
-  await Goal.findByIdAndDelete(id);
-  res.json({ message: "Goal deleted successfully" });
 };
