@@ -1,28 +1,65 @@
 import React from "react";
 
-export default class PersonalGood extends React.Component {
-  next = (e) => {
+export default function PersonalGood(props) {
+  const next = (e) => {
     e.preventDefault();
-    this.props.nextStep();
+    props.nextStep();
   };
 
-  back = (e) => {
+  const back = (e) => {
     e.preventDefault();
-    this.props.prevStep();
+    props.prevStep();
   };
 
-  render() {
-    const { values, handleChange } = this.props;
-    return (
-      <div>
-        <div>
-          <h1>Personal Goals</h1>
-        </div>
-        <button>Professional</button>
-        <button>Fitness</button>
-        <button>Personal Development</button>
-        <button>Other</button>
+  const selected = (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div className="formContainer">
+      <div className="text">
+        <h1>Personal Goals</h1>
       </div>
-    );
-  }
+      <div className="buttonContainer">
+        <input
+          type="button"
+          className="options"
+          onClick={selected}
+          value="Professional"
+        />
+        &nbsp;&nbsp;
+        <input
+          type="button"
+          className="options"
+          onClick={selected}
+          value="Fitness"
+        />
+        &nbsp;&nbsp;
+        <input
+          type="button"
+          className="options"
+          onClick={selected}
+          value="Personal Dev"
+        />
+        &nbsp;&nbsp;
+        <input
+          type="button"
+          className="options"
+          onClick={selected}
+          value="Other"
+        />
+      </div>
+      <div className="buttonSecondary">
+        <button className="formControl" onClick={back}>
+          Back
+        </button>
+        &nbsp;
+        <a href="/home">
+          <button className="formControl" onClick={next}>
+            Next
+          </button>
+        </a>
+      </div>
+    </div>
+  );
 }

@@ -1,0 +1,48 @@
+h1 {
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+}
+
+h2 {
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+}
+.textHome {
+  margin-left: 20px;
+  padding-top: 60px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  font-family: "Courier New", Courier, monospace;
+  width: 100vh;
+  font-size: 40px;
+  font-weight: 10000;
+}
+
+.containerSecondary {
+  display: grid;
+  justify-content: center;
+}
+
+.selectButtonHome {
+  color: rgb(58, 58, 58);
+  font-weight: 600;
+  height: 50px;
+  width: 120px;
+  border-radius: 5px;
+  border-color: aliceblue;
+  background-color: aliceblue;
+  opacity: 80%;
+  font-size: 20px;
+  outline-style: none;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.buttonContainerHome {
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+  width: 50vh;
+  padding-top: 5vh;
+}
