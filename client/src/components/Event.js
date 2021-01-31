@@ -6,10 +6,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 5,
+    textAlign: 'center'
   },
   bullet: {
     display: 'inline-block',
@@ -21,18 +23,28 @@ const useStyles = makeStyles({
   },
   pos: {
     marginBottom: 12,
-    alignItems: 'center', 
-    justifyContent:'center'
   },
+  spacing: {
+    textAlign: 'center'
+  }
 });
+
+const cardStyle = {
+    backgroundColor: '#C4C4C4'
+}
+const LinkStyle = {
+     textDecoration: 'none',
+     textAlign: 'center',
+}
 
 export default function Event(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} style={cardStyle}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+
+        <Typography className={classes.title} color="textPrimary" variant="h1" component="h2" gutterBottom>
           {props.data.title}
         </Typography>
        
@@ -40,14 +52,18 @@ export default function Event(props) {
           {props.data.description}
         </Typography>
         
-        <Typography variant="body2" component="p">
-          {props.data.numCommitters}
-          <br />
+     
+        { 
+        (props.data.numCommitters)
+          ? <Typography variant="body2" component="p"> {props.data.numCommitters} attendees </Typography>
+          : <Typography variant="body2" component="p"> 0 attendees</Typography>
+      }
+         
           
-        </Typography>
+    
       </CardContent>
-      <CardActions>
-        <Button size="small">Join Event</Button>
+      <CardActions style={{textAlign: "center"}}>
+      <Link to={`/feed/${props.data._id}`} style={LinkStyle}>View More</Link>
       </CardActions>
     </Card>
   );
