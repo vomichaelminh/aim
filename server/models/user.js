@@ -28,15 +28,4 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("users", userSchema);
 
-// export default User;
-//   eventCategory: { type: String, required: true },
-//   createdEvents: { type: [String], required: true },
-//   numCreatedEvents: { type: Number, required: true },
-//   committedEvents: { type: [String], required: true },
-//   numCommittedEvents: { type: Number, required: true },
-//   friends: { type: [String], required: true },
-// });
-
-// const User = mongoose.model("users", userSchema);
-
 export default User;

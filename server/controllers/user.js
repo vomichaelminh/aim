@@ -160,15 +160,20 @@ export const getUser = async (req, res) => {
 
 export const getUserCommittedEvents = async (req, res) => {
   try {
-    const user = await User.findById({ _id: req.user });
-    res.json({
-      committedEvents: user.committedEvents,
-      numCommittedEvents: user.numCommittedEvents,
-    });
+    const user = await User.findById(req.user);
+    let committedEvents = [];
+
+    await Promise.all(user.committedEvents.map(async (eventId) => {
+      const event = await Goal.findById(eventId);
+      committedEvents.push(event);
+    }));
+
+    
+    res.json(committedEvents);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+}
 
 export const commitGoal = async (req, res) => {
   try {
