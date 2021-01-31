@@ -5,7 +5,7 @@ const goalSchema = new mongoose.Schema({
     type: String,
     // required: true,
   },
-  posterId: {
+  userId: {
     type: String,
     // required: true,
   },
