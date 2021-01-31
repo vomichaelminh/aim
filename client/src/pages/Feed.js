@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: 80,
     paddingTop: 40,
+    height: "100vh",
     backgroundImage: "linear-gradient(#acc2ff, #a0d9dd)",
   },
   paper: {
@@ -57,7 +58,10 @@ export const Feed = () => {
         <Grid container spacing={3}>
           {goals.map((goal) => (
             <Grid key={goal._id} item xs={4}>
-              <Link to={`/feed/goals/${goal._id}`} style={{textDecoration: 'none'}}>
+              <Link
+                to={`/feed/goals/${goal._id}`}
+                style={{ textDecoration: "none" }}
+              >
                 <Event data={goal} />
               </Link>
             </Grid>
