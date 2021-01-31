@@ -87,9 +87,7 @@ export default function Event(props) {
         )}
       </CardContent>
       <CardActions>
-        <Link to={`/feed/${props.data._id}`} style={linkStyle}>
-          View More
-        </Link>
+       
       </CardActions>
     </Card>
   );
