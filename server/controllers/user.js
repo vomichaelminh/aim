@@ -163,17 +163,18 @@ export const getUserCommittedEvents = async (req, res) => {
     const user = await User.findById(req.user);
     let committedEvents = [];
 
-    await Promise.all(user.committedEvents.map(async (eventId) => {
-      const event = await Goal.findById(eventId);
-      committedEvents.push(event);
-    }));
+    await Promise.all(
+      user.committedEvents.map(async (eventId) => {
+        const event = await Goal.findById(eventId);
+        committedEvents.push(event);
+      })
+    );
 
-    
     res.json(committedEvents);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 export const commitGoal = async (req, res) => {
   try {
@@ -206,11 +207,11 @@ export const uncommitGoal = async (req, res) => {
     } else {
       const user = await User.findByIdAndUpdate(req.user, {
         $pull: { committedEvents: id },
-        $dec: { numCommittedEvents: 1 },
+        $inc: { numCommittedEvents: -1 },
       });
       const goal = await Goal.findByIdAndUpdate(id, {
         $pull: { committers: user._id },
-        $dec: { numCommitters: 1 },
+        $inc: { numCommitters: -1 },
       });
       res.status(200).json({ message: "Goal successfully uncommitted." });
     }

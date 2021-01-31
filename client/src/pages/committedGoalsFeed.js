@@ -1,4 +1,4 @@
-import Event from "../components/Event";
+import EventCommitted from "../components/EventCommited";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Feed = () => {
+export const CommittedFeed = () => {
   const { userData } = useContext(UserContext);
   const [goals, setGoals] = useState([]);
   useEffect(() => {
@@ -35,23 +35,25 @@ export const Feed = () => {
         );
 
         setGoals(goalRes.data);
-        console.log(goals);
       }
     };
     getCurrentGoals();
-  }, []);
+  }, [userData]);
+
+  useEffect(() => {
+    console.log(goals);
+  }, [goals]);
+
   const classes = useStyles();
-  console.log(goals.length);
   return (
     <div>
       <NavBar />
       <div className={classes.root}>
-        {console.log(goals)}
         {goals ? (
           <Grid container spacing={3}>
             {goals.map((user) => (
               <Grid item xs={4}>
-                <Event data={user} />
+                <EventCommitted data={user} />
               </Grid>
             ))}
           </Grid>
@@ -63,4 +65,4 @@ export const Feed = () => {
   );
 };
 
-export default Feed;
+export default CommittedFeed;

@@ -28,10 +28,23 @@ export const EventDescription = (props) => {
     console.log(goals);
   }, [goals]);
 
+  const onClick = async () => {
+    if (userData.token) {
+      const goalRes = await axios.get(
+        `http://localhost:5000/users/commitGoal/${goalId}`,
+        {
+          headers: { "x-auth-token": userData.token },
+        }
+      );
+      setGoals(goalRes.data);
+      window.location.href = "/feed";
+    }
+  };
+
   return (
     <div className="background">
       <div className="cardContainer">
-        <div className="card">
+        <div className="card" style={{ textAlign: "center" }}>
           <h1 className="item" style={{ color: `black` }}>
             {goals.title}
           </h1>
@@ -55,7 +68,9 @@ export const EventDescription = (props) => {
               marginTop: `200px`,
             }}
           >
-            <button className="joinButton">JOIN INITIATIVE</button>
+            <button onClick={onClick} className="joinButton">
+              JOIN INITIATIVE
+            </button>
           </div>
           <h4 className="item" style={{ color: `black` }}>
             {goals.numCommitters ? goals.numCommitters : "0"} People have
