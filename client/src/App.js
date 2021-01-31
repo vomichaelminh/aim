@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Feed from "./pages/Feed";
 
-import Home from './pages/Home'
+import Home from "./pages/Home";
 import React, { useState, useEffect } from "react";
 import committedGoals from "./pages/committedGoalsFeed";
 import createdGoals from "./pages/createdGoalsFeed";
@@ -12,8 +12,7 @@ import UserContext from "./context/UserContext";
 import Register from "./pages/Register";
 import axios from "axios";
 import newEvent from "./pages/createEvent";
-import EventDescription from './components/EventDescription'
-
+import EventDescription from "./components/EventDescription";
 
 export const App = () => {
   const [userData, setUserData] = useState({
@@ -51,8 +50,6 @@ export const App = () => {
   return (
     <div>
       <Router>
-
-
         <UserContext.Provider value={{ userData, setUserData }}>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -60,17 +57,13 @@ export const App = () => {
             <Route path="/profile" component={Profile} />
             <Route path="/register" component={Register} />
 
-            <Route path="/feed" component={Feed} />
+            <Route exact path="/feed" component={Feed} />
             <Route path="/committedGoals" component={committedGoals} />
             <Route path="/createdGoals" component={createdGoals} />
             <Route path="/newevent" component={newEvent} />
-            <Route
-              path="/feed/:id"
-              render={(props) => <EventDescription {...props} />}
-            />
+            <Route path="/feed/goals/:goalId" component={EventDescription} />
           </Switch>
         </UserContext.Provider>
-
       </Router>
     </div>
   );
