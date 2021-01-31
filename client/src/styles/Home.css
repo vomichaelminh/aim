@@ -37,6 +37,12 @@ h2 {
   font-size: 20px;
   outline-style: none;
   font-family: "Courier New", Courier, monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
 }
 
 .buttonContainerHome {

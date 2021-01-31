@@ -5,9 +5,10 @@ import {
   createGoal,
   getGoals,
   getGoal,
+  getUserGoals,
   updateGoal,
   deleteGoal,
-  getRandomGoal
+  getRandomGoal,
 } from "../controllers/goal.js";
 
 const router = express.Router();
@@ -17,6 +18,8 @@ router.post("/", auth, createGoal);
 
 // get all Goals
 router.get("/", getGoals);
+
+router.get("/createdGoals", auth, getUserGoals);
 
 router.get("/random", getRandomGoal);
 

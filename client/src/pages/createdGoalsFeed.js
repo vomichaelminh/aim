@@ -49,13 +49,17 @@ export const Feed = () => {
     <div>
       <NavBar />
       <div className={classes.root}>
-        <Grid container spacing={3}>
-          {goals.map((user) => (
-            <Grid item xs={4}>
-              <Event data={user} />
-            </Grid>
-          ))}
-        </Grid>
+        {goals ? (
+          <Grid container spacing={3}>
+            {goals.map((user) => (
+              <Grid item xs={4}>
+                <Event data={user} />
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <p>no goals detected</p>
+        )}
       </div>
     </div>
   );
