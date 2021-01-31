@@ -37,7 +37,6 @@ export const createGoal = async (req, res) => {
   const newGoal = new Goal({
     title,
     description,
-    category,
     committers,
     numCommitters,
     startDate: newStartDate,
@@ -45,10 +44,6 @@ export const createGoal = async (req, res) => {
     isCompletedGoal,
     isTimedGoal,
     postDate,
-    committers,
-    numCommitters,
-    isCompletedGoal,
-    isTimedGoal,
     userId: req.user,
   });
 
@@ -57,7 +52,7 @@ export const createGoal = async (req, res) => {
       if (err) {
         res.status(409).json({ message: err});
       } else {
-        const status = await User.findByIdAndUpdate(posterId, { $push: {"committedEvents": doc._id, "createdEvents": doc._id}, $inc: {"numCommittedEvents": 1, "numCreatedEvents": 1}});
+        const status = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": doc._id, "createdEvents": doc._id}, $inc: {"numCommittedEvents": 1, "numCreatedEvents": 1}});
         res.status(200).json({ doc: savedGoal, message: "User schema updated successfully"});
       }
     });
@@ -152,13 +147,13 @@ export const deleteGoal = async (req, res) => {
     await Goal.findByIdAndDelete(id);
 
     const committers = goal.committers;
-    const posterId = goal.posterId;
+    const userId = goal.userId;
 
     await Promise.all(committers.map(async (committer) => {
       await User.findByIdAndUpdate(committer, {$pull: {"committedEvents": id}, $inc: {"numCommittedEvents": -1}});
     }));
 
-    await User.findByIdAndUpdate(posterId, {$pull: {"createdEvents": id}, $inc: {"numCreatedEvents": -1}});
+    await User.findByIdAndUpdate(userId, {$pull: {"createdEvents": id}, $inc: {"numCreatedEvents": -1}});
 
     res.json({ message: "Goal deleted successfully" });
   } catch (err) {
