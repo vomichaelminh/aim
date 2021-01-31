@@ -73,13 +73,24 @@ export const getGoals = async (req, res) => {
 export const getGoal = async (req, res) => {
   const { id } = req.params;
   try {
-    console.log(isValidObjectId(id));
     const goal = await Goal.findById(id);
     res.status(200).json(goal);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const getRandomGoal = async (req, res) => {
+  try {
+    let goals = await Goal.find();
+    
+    goals = await goals.filter(goal => !(goal.isCompletedEvent));
+    let random = Math.floor(Math.random() * goals.length);
+    res.status(200).json(goals[random]);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
 
 export const updateGoal = async (req, res) => {};
 

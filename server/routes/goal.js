@@ -6,6 +6,7 @@ import {
   getGoal,
   updateGoal,
   deleteGoal,
+  getRandomGoal
 } from "../controllers/goal.js";
 
 const router = express.Router();
@@ -15,6 +16,8 @@ router.post("/", createGoal);
 
 // get all user's Goals
 router.get("/", getGoals);
+
+router.get("/random", getRandomGoal);
 
 // get a user's Goal
 router.get("/:id", getGoal);
