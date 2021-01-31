@@ -4,7 +4,7 @@ import Goal from "../models/goal.js";
 import User from "../models/user.js";
 
 export const createGoal = async (req, res) => {
-  const {
+  let {
     title,
     posterId,
     description,
@@ -22,11 +22,9 @@ export const createGoal = async (req, res) => {
   }
 
   let postDate = Math.floor(Date.now() / 1000);
-
-  if (!(committers.find(posterId))) {
+  if (!committers || committers.length == 0) {
+    committers = [];
     committers.push(posterId);
-  }
-  if (numCommitters == 0) {
     numCommitters = 1;
   }
 
@@ -43,8 +41,8 @@ export const createGoal = async (req, res) => {
     category,
     committers,
     numCommitters,
-    startDate,
-    endDate,
+    startDate: (startDate ? startDate : undefined),
+    endDate: (endDate ? endDate : undefined),
     isCompletedGoal,
     isTimedGoal,
     postDate,
@@ -124,15 +122,29 @@ export const updateGoal = async (req, res) => {
 };
 
 export const deleteGoal = async (req, res) => {
-  const { id } = req.params;
-  const goal = await Goal.findOne({ _id: id });
+  try {
+    const { id } = req.params;
+    const goal = await Goal.findOne({ _id: id });
 
-  if (!goal) {
-    return res.status(400).json({
-      message: "No goal found with this ID that belongs to the current user.",
-    });
+    if (!goal) {
+      return res.status(400).json({
+        message: "No goal found with this ID that belongs to the current user.",
+      });
+    }
+
+    await Goal.findByIdAndDelete(id);
+
+    const committers = goal.committers;
+    const posterId = goal.posterId;
+
+    await Promise.all(committers.map(async (committer) => {
+      await User.findByIdAndUpdate(committer, {$pull: {"committedEvents": id}, $inc: {"numCommittedEvents": -1}});
+    }));
+
+    await User.findByIdAndUpdate(posterId, {$pull: {"createdEvents": id}, $inc: {"numCreatedEvents": -1}});
+
+    res.json({ message: "Goal deleted successfully" });
+  } catch (err) {
+    res.status(400).json({message: err.message});
   }
-
-  await Goal.findByIdAndDelete(id);
-  res.json({ message: "Goal deleted successfully" });
 };
