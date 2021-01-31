@@ -31,6 +31,6 @@ router.get("/committedEvents", auth, getUserCommittedEvents);
 
 router.get("/commitGoal/:id", auth, commitGoal);
 
-router.get("/uncommitGoal", auth, uncommitGoal);
+router.get("/uncommitGoal/:id", auth, uncommitGoal);
 
 export default router;

@@ -185,25 +185,15 @@ export const commitGoal = async (req, res) => {
 export const uncommitGoal = async (req, res) => {
   try {
     const {id} = req.params;
+    const userDoc = await User.findById(req.user);
+    if (!(userDoc.committedEvents.find(event => event == id))) {
+      res.status(210).json({ message: "Already uncommitted to goal."});
+    } else {
     const user = await User.findByIdAndUpdate(req.user, { $pull: {"committedEvents": id}, $dec: {"numCommittedEvents" : 1}});
     const goal = await Goal.findByIdAndUpdate(id, { $pull: { "committers": user._id }, $dec: { "numCommitters" : 1}}); 
     res.status(200).json({ message: "Goal successfully uncommitted."});
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
-
-export const deleteGoal = async (req, res) => {
-  const {id} = req.params;
-  const goal = await Goal.findByIdAndDelete(id); 
-  committers //have them and delete the goal id from theirs 
-  //find main user and delete
-}
-
-export const createGoal = async (req, res) => {
-  const {id} = req.params;
-  const goal = await Goal.createGoal(id); //not sure
-  committers //have them and delete the goal id from theirs 
-  //find main user and delete
-}
-
