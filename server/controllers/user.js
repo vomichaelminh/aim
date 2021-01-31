@@ -128,9 +128,13 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const updatedUser = await User.findById(req.user);
-    let status = await User.updateOne({ _id: updatedUser._id }, [{ $set: req.body }])
+    let status = await User.updateOne({ _id: updatedUser._id }, [
+      { $set: req.body },
+    ]);
     if (!status.ok) {
-      res.status(403).json({ message: "No User acknowledged or matched. No update." });
+      res
+        .status(403)
+        .json({ message: "No User acknowledged or matched. No update." });
     } else {
       res.json({ message: "User updated successfully." });
     }
@@ -146,8 +150,8 @@ export const getUser = async (req, res) => {
       displayName: user.displayName,
       id: user._id,
       location: user.location,
-      firstName: (user.firstName ? user.firstName : ""),
-      lastName: (user.lastName ? user.lastName : ""),
+      firstName: user.firstName ? user.firstName : "",
+      lastName: user.lastName ? user.lastName : "",
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -156,44 +160,56 @@ export const getUser = async (req, res) => {
 
 export const getUserCommittedEvents = async (req, res) => {
   try {
-    const user = await User.findById(req.user);
-    res.json({ 
-      committedEvents: user.committedEvents, 
+    const user = await User.findById({ _id: req.user });
+    res.json({
+      committedEvents: user.committedEvents,
       numCommittedEvents: user.numCommittedEvents,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 export const commitGoal = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const userDoc = await User.findById(req.user);
-    if (userDoc.committedEvents.find(event => event == id)) {
-      res.status(210).json({ message: "Already committed to goal."});
+    if (userDoc.committedEvents.find((event) => event == id)) {
+      res.status(210).json({ message: "Already committed to goal." });
     } else {
-      const user = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": id}, $inc: {"numCommittedEvents" : 1}});
-      const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); //look at later - id
-      res.status(200).json({ message: "Goal successfully committed."});
+      const user = await User.findByIdAndUpdate(req.user, {
+        $push: { committedEvents: id },
+        $inc: { numCommittedEvents: 1 },
+      });
+      const goal = await Goal.findByIdAndUpdate(id, {
+        $push: { committers: user._id },
+        $inc: { numCommitters: 1 },
+      }); //look at later - id
+      res.status(200).json({ message: "Goal successfully committed." });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 export const uncommitGoal = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const userDoc = await User.findById(req.user);
-    if (!(userDoc.committedEvents.find(event => event == id))) {
-      res.status(210).json({ message: "Already uncommitted to goal."});
+    if (!userDoc.committedEvents.find((event) => event == id)) {
+      res.status(210).json({ message: "Already uncommitted to goal." });
     } else {
-    const user = await User.findByIdAndUpdate(req.user, { $pull: {"committedEvents": id}, $dec: {"numCommittedEvents" : 1}});
-    const goal = await Goal.findByIdAndUpdate(id, { $pull: { "committers": user._id }, $dec: { "numCommitters" : 1}}); 
-    res.status(200).json({ message: "Goal successfully uncommitted."});
+      const user = await User.findByIdAndUpdate(req.user, {
+        $pull: { committedEvents: id },
+        $dec: { numCommittedEvents: 1 },
+      });
+      const goal = await Goal.findByIdAndUpdate(id, {
+        $pull: { committers: user._id },
+        $dec: { numCommitters: 1 },
+      });
+      res.status(200).json({ message: "Goal successfully uncommitted." });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};

@@ -6,7 +6,7 @@ export const EventDescription = (props) => {
   const { goalId } = props.match.params;
 
   const { userData } = useContext(UserContext);
-  const [goals, setGoals] = useState([]);
+  const [goals, setGoals] = useState({});
 
   useEffect(() => {
     const getCurrentGoals = async () => {
@@ -18,15 +18,19 @@ export const EventDescription = (props) => {
           }
         );
         setGoals(goalRes.data);
-        console.log(goals);
       }
     };
     getCurrentGoals();
-  }, [userData]);
-  console.log(props);
+  }, []);
+
+  useEffect(() => {
+    console.log(goals);
+  }, [goals]);
+
   return (
     <div>
-      <p>Hello</p>
+      <p>{goals.title}</p>
+      <p>{goals.description}</p>
     </div>
   );
 };
