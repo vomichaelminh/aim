@@ -57,7 +57,7 @@ export const Feed = () => {
         <Grid container spacing={3}>
           {goals.map((goal) => (
             <Grid key={goal._id} item xs={4}>
-              <Link to={`/feed/goals/${goal._id}`}>
+              <Link to={`/feed/goals/${goal._id}`} style={{textDecoration: 'none'}}>
                 <Event data={goal} />
               </Link>
             </Grid>
