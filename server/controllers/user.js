@@ -162,7 +162,12 @@ export const getUserCommittedEvents = async (req, res) => {
 export const commitGoal = async (req, res) => {
   const {id} = req.params;
   const user = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": id}, $inc: {"numCommittedEvents" : 1}});
-  const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); //look at later - id
-  res.json({
-  });
+  const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); 
 }
+
+export const uncommitGoal = async (req, res) => {
+  const {id} = req.params; //fix this
+  const user = await User.findByIdAndUpdate(req.user, { $pull: {"committedEvents": id}, $dec: {"numCommittedEvents" : 1}});
+  const goal = await Goal.findByIdAndUpdate(id, { $pull: { "committers": user._id }, $dec: { "numCommitters" : 1}}); 
+}
+
