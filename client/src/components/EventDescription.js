@@ -53,8 +53,8 @@ export const EventDescription = (props) => {
           </h4>
           <div style={{ display: `flex`, justifyContent: `space-around` }}>
             <h4 className="item" style={{ color: `black` }}>
-              {goals.startDate ? goals.startDate : "Start Date"} -{" "}
-              {goals.endDate ? goals.endDate : "End Date"}
+              {goals.startDate ? ((new Date(goals.startDate * 1000)).getMonth() + 1) + "/" + (new Date(goals.startDate * 1000)).getDate() + "/" + (new Date(goals.startDate * 1000)).getFullYear() : "Start Date"} -{" "}
+              {goals.endDate ? ((new Date(goals.endDate * 1000)).getMonth() + 1) + "/" + (new Date(goals.endDate * 1000)).getDate() + "/" + (new Date(goals.endDate * 1000)).getFullYear() : "End Date"}
             </h4>
           </div>
           <h4 className="item" style={{ color: `black` }}>
