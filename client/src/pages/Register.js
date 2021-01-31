@@ -21,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Aim
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -86,7 +86,7 @@ export default function Register() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" style={{color: 'black'}}>
           Sign in
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
@@ -139,13 +139,7 @@ export default function Register() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
+          
         </form>
       </div>
       <Box mt={8}>
