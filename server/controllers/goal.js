@@ -57,13 +57,9 @@ export const getGoals = async (req, res) => {
   try {
     let goals = await Goal.find();  // array of json documents
     
-    // filter by !isCompletedEvent
     goals = goals.filter(goal => !(goal.isCompletedEvent));
-    // sort by postDate, desc
-    // goals.forEach(something)
     goals.sort(sortByGoals("postDate"));
 
-    console.log(goals);
     res.status(200).json(goals);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -96,7 +92,6 @@ export const updateGoal = async (req, res) => {
   const { id } = req.params;
   try {
     let status = await Goal.updateOne({ _id: id }, [{ $set: req.body }])
-    console.log(status);
     if (!status.ok) {
       res.status(403).json({ message: "No Goal acknowledged or matched. No update." });
     } else {
