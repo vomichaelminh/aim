@@ -28,6 +28,6 @@ router.get("/", auth, getUser);
 
 router.get("/committedEvents", auth, getUserCommittedEvents);
 
-router.get("/commitGoal", auth, commitGoal);
+router.get("/commitGoal/:id", auth, commitGoal);
 
 export default router;
