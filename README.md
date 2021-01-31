@@ -9,7 +9,7 @@ Aim is a community platform used for people who want to achieve similar goals (e
 We used React.js to build the front end using CSS and HTML and we used NodeJS, Express, along with MongoDB, to build the backend
 
 
-Contributors: Sol Lee, Michael Minh Vo, Jerry Tan, Kelly Zheng, Joseph Gu
+Contributors: Sol Lee, Michael Vo, Jerry Tan, Kelly Zheng, Joseph Gu
 
 ## Getting started
 
