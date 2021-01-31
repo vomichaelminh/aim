@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Goal from "../models/goal.js";
 import User from "../models/user.js";
 
 export const registerUser = async (req, res) => {
@@ -124,10 +125,54 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-export const getUser = async (req, res) => {
-  const user = await User.findById(req.user);
-  res.json({
-    displayName: user.displayName,
-    id: user._id,
-  });
+export const updateUser = async (req, res) => {
+  try {
+    const updatedUser = await User.findById(req.user);
+    let status = await User.updateOne({ _id: updatedUser._id }, [{ $set: req.body }])
+    if (!status.ok) {
+      res.status(403).json({ message: "No User acknowledged or matched. No update." });
+    } else {
+      res.json({ message: "User updated successfully." });
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 };
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+    res.json({
+      displayName: user.displayName,
+      id: user._id,
+      location: user.location,
+      firstName: (user.firstName ? user.firstName : ""),
+      lastName: (user.lastName ? user.lastName : ""),
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getUserCommittedEvents = async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+    res.json({ 
+      committedEvents: user.committedEvents, 
+      numCommittedEvents: user.numCommittedEvents,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export const commitGoal = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const user = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": id}, $inc: {"numCommittedEvents" : 1}});
+    const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); //look at later - id
+    res.status(200).json({ message: "Goal successfully committed."});
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
