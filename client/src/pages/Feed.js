@@ -1,4 +1,5 @@
 import Event from "../components/Event";
+
 import { ThemeProvider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -43,8 +44,14 @@ export const Feed = () => {
   }, [userData]);
   const classes = useStyles();
 
+  // const logOff = () => {
+  //   localStorage.setItem("auth-token", "");
+  //   window.location.href = "/";
+  // };
+
   return (
     <div>
+      {/* <button onClick={logOff}> Log out</button> */}
       <NavBar />
       <div className={classes.root}>
         <Grid container spacing={3}>

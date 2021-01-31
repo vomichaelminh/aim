@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const useStyles = makeStyles({
   navbarDisplayFlex: {
@@ -19,11 +20,22 @@ const useStyles = makeStyles({
   navDisplayFlex: {
     display: `flex`,
     justifyContent: `space-between`,
+    fontSize: `10`,
   },
   linkText: {
+    paddingRight: `40px`,
+    paddingLeft: `20px`,
     textDecoration: `none`,
     textTransform: `uppercase`,
-    color: `white`,
+    color: `grey`,
+    fontSize: `12`,
+  },
+  logout: {
+    color: "grey",
+  },
+  toolbar: {
+    backgroundColor: `white`,
+    color: `black`,
   },
 });
 
@@ -44,7 +56,7 @@ const Header = () => {
 
   return (
     <AppBar position="static">
-      <Toolbar>
+      <Toolbar className={classes.toolbar}>
         <Container maxWidth="xs" className={classes.navbarDisplayFlex}>
           <List
             component="nav"
@@ -53,14 +65,17 @@ const Header = () => {
           >
             {navLinks.map(({ title, path }) => (
               <a href={path} key={title} className={classes.linkText}>
-                <ListItem button>
-                  <ListItemText primary={title} />
-                </ListItem>
+                <ListItemText primary={title} />
               </a>
             ))}
           </List>
           <button onClick={logOff}> Log out</button>
         </Container>
+        <div>
+          <IconButton onClick={logOff}>
+            <ExitToAppIcon className={classes.logout} />
+          </IconButton>
+        </div>
       </Toolbar>
     </AppBar>
   );
