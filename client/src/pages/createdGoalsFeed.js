@@ -27,9 +27,12 @@ export const Feed = () => {
   useEffect(() => {
     const getCurrentGoals = async () => {
       if (userData.token) {
-        const goalRes = await axios.get("http://localhost:5000/goals/createdGoals", {
-          headers: { "x-auth-token": userData.token },
-        });
+        const goalRes = await axios.get(
+          "http://localhost:5000/goals/createdGoals",
+          {
+            headers: { "x-auth-token": userData.token },
+          }
+        );
         setGoals(goalRes.data);
       }
     };
@@ -37,14 +40,13 @@ export const Feed = () => {
   }, [userData]);
   const classes = useStyles();
 
-  const logOff = () => {
-    localStorage.setItem("auth-token", "");
-    window.location.href = "/";
-  };
+  // const logOff = () => {
+  //   localStorage.setItem("auth-token", "");
+  //   window.location.href = "/";
+  // };
 
   return (
     <div>
-      <button onClick={logOff}> Log out</button>
       <NavBar />
       <div className={classes.root}>
         <Grid container spacing={3}>
@@ -60,5 +62,3 @@ export const Feed = () => {
 };
 
 export default Feed;
-
-
