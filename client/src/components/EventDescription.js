@@ -1,10 +1,68 @@
-import React from "react";
-
+import UserContext from "../context/UserContext";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import "../styles/Feed.css";
 export const EventDescription = (props) => {
-  console.log(props.match.params.id);
+  const { goalId } = props.match.params;
+
+  const { userData } = useContext(UserContext);
+  const [goals, setGoals] = useState({});
+
+  useEffect(() => {
+    const getCurrentGoals = async () => {
+      if (userData.token) {
+        const goalRes = await axios.get(
+          `http://localhost:5000/goals/${goalId}`,
+          {
+            headers: { "x-auth-token": userData.token },
+          }
+        );
+        setGoals(goalRes.data);
+      }
+    };
+    getCurrentGoals();
+  }, [userData]);
+  console.log(props);
+
+  useEffect(() => {
+    console.log(goals);
+  }, [goals]);
+
   return (
-    <div>
-      <p> {props.match.params.id}</p>
+    <div className="background">
+      <div className="cardContainer">
+        <div className="card">
+          <h1 className="item" style={{ color: `black` }}>
+            {goals.title}
+          </h1>
+          <h4 className="item" style={{ color: `black` }}>
+            {goals.isCompletedEvent}
+          </h4>
+          <div style={{ display: `flex`, justifyContent: `space-around` }}>
+            <h4 className="item" style={{ color: `black` }}>
+              {goals.startDate ? goals.startDate : "Start Date"} -{" "}
+              {goals.endDate ? goals.endDate : "End Date"}
+            </h4>
+          </div>
+          <h4 className="item" style={{ color: `black` }}>
+            {goals.description}
+          </h4>
+
+          <div
+            style={{
+              display: `flex`,
+              justifyContent: `center`,
+              marginTop: `200px`,
+            }}
+          >
+            <button className="joinButton">JOIN INITIATIVE</button>
+          </div>
+          <h4 className="item" style={{ color: `black` }}>
+            {goals.numCommitters ? goals.numCommitters : "0"} People have
+            committed to this goal!
+          </h4>
+        </div>
+      </div>
     </div>
   );
 };

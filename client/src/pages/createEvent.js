@@ -29,7 +29,7 @@ export default function CreateEvent(props) {
         headers: { "x-auth-token": userData.token },
       });
 
-      console.log("Drama sucessfully added!");
+      console.log("Goal sucessfully added!");
       window.location.href = "/feed";
     } catch (err) {
       console.log(err.response.data);
