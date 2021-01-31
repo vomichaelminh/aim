@@ -9,6 +9,8 @@ import {
   deleteUser,
   getUserCommittedEvents,
   updateUser,
+  commitGoal,
+  uncommitGoal
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -25,6 +27,10 @@ router.patch("/update", auth, updateUser);
 
 router.get("/", auth, getUser);
 
-router.get("/committedevents", auth, getUserCommittedEvents);
+router.get("/committedEvents", auth, getUserCommittedEvents);
+
+router.get("/commitGoal/:id", auth, commitGoal);
+
+router.get("/uncommitGoal/:id", auth, uncommitGoal);
 
 export default router;
