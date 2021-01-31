@@ -43,6 +43,8 @@ mongoose.connect(
   }
 );
 
+mongoose.set('useFindAndModify', false);
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -169,9 +169,30 @@ export const getUserCommittedEvents = async (req, res) => {
 export const commitGoal = async (req, res) => {
   try {
     const {id} = req.params;
-    const user = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": id}, $inc: {"numCommittedEvents" : 1}});
-    const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); //look at later - id
-    res.status(200).json({ message: "Goal successfully committed."});
+    const userDoc = await User.findById(req.user);
+    if (userDoc.committedEvents.find(event => event == id)) {
+      res.status(210).json({ message: "Already committed to goal."});
+    } else {
+      const user = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": id}, $inc: {"numCommittedEvents" : 1}});
+      const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); //look at later - id
+      res.status(200).json({ message: "Goal successfully committed."});
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export const uncommitGoal = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const userDoc = await User.findById(req.user);
+    if (!(userDoc.committedEvents.find(event => event == id))) {
+      res.status(210).json({ message: "Already uncommitted to goal."});
+    } else {
+    const user = await User.findByIdAndUpdate(req.user, { $pull: {"committedEvents": id}, $dec: {"numCommittedEvents" : 1}});
+    const goal = await Goal.findByIdAndUpdate(id, { $pull: { "committers": user._id }, $dec: { "numCommitters" : 1}}); 
+    res.status(200).json({ message: "Goal successfully uncommitted."});
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
