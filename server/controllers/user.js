@@ -145,6 +145,9 @@ export const getUser = async (req, res) => {
     res.json({
       displayName: user.displayName,
       id: user._id,
+      location: user.location,
+      firstName: (user.firstName ? user.firstName : ""),
+      lastName: (user.lastName ? user.lastName : ""),
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -152,17 +155,24 @@ export const getUser = async (req, res) => {
 };
 
 export const getUserCommittedEvents = async (req, res) => {
-  const user = await User.findById(req.user);
-  res.json({ 
-    committedEvents: user.committedEvents, 
-    numCommittedEvents: user.numCommittedEvents,
-  });
+  try {
+    const user = await User.findById(req.user);
+    res.json({ 
+      committedEvents: user.committedEvents, 
+      numCommittedEvents: user.numCommittedEvents,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
 
 export const commitGoal = async (req, res) => {
-  const {id} = req.params;
-  const user = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": id}, $inc: {"numCommittedEvents" : 1}});
-  const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); //look at later - id
-  res.json({
-  });
+  try {
+    const {id} = req.params;
+    const user = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": id}, $inc: {"numCommittedEvents" : 1}});
+    const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); //look at later - id
+    res.status(200).json({ message: "Goal successfully committed."});
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
