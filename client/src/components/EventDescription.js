@@ -6,7 +6,7 @@ export const EventDescription = (props) => {
   const { goalId } = props.match.params;
 
   const { userData } = useContext(UserContext);
-  const [goals, setGoals] = useState([]);
+  const [goals, setGoals] = useState({});
 
   useEffect(() => {
     const getCurrentGoals = async () => {
@@ -18,31 +18,36 @@ export const EventDescription = (props) => {
           }
         );
         setGoals(goalRes.data);
-        console.log(goals);
       }
     };
     getCurrentGoals();
   }, [userData]);
   console.log(props);
 
+  useEffect(() => {
+    console.log(goals);
+  }, [goals]);
+
   return (
     <div className="background">
       <div className="cardContainer">
         <div className="card">
           <h1 className="item" style={{ color: `black` }}>
-            Title
+            {goals.title}
           </h1>
           <h4 className="item" style={{ color: `black` }}>
-            Is Completed
+            {goals.isCompletedEvent}
           </h4>
           <div style={{ display: `flex`, justifyContent: `space-around` }}>
             <h4 className="item" style={{ color: `black` }}>
-              Start Date - End Date
+              {goals.startDate ? goals.startDate : "Start Date"} -{" "}
+              {goals.endDate ? goals.endDate : "End Date"}
             </h4>
           </div>
           <h4 className="item" style={{ color: `black` }}>
-            Description
+            {goals.description}
           </h4>
+
           <div
             style={{
               display: `flex`,
@@ -52,6 +57,10 @@ export const EventDescription = (props) => {
           >
             <button className="joinButton">JOIN INITIATIVE</button>
           </div>
+          <h4 className="item" style={{ color: `black` }}>
+            {goals.numCommitters ? goals.numCommitters : "0"} People have
+            committed to this goal!
+          </h4>
         </div>
       </div>
     </div>

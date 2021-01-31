@@ -39,9 +39,9 @@ export const Feed = () => {
       }
     };
     getCurrentGoals();
-  }, [userData]);
+  }, []);
   const classes = useStyles();
-
+  console.log(goals.length);
   return (
     <div>
       <NavBar />
