@@ -7,6 +7,7 @@ import {
   tokenIsValid,
   getUser,
   deleteUser,
+  getUserCommittedEvents,
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -20,5 +21,7 @@ router.delete("/delete", auth, deleteUser);
 router.post("/tokenIsValid", tokenIsValid);
 
 router.get("/", auth, getUser);
+
+router.get("/committedevents", auth, getUserCommittedEvents);
 
 export default router;

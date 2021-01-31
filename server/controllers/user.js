@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Goal from "../models/goal.js";
 import User from "../models/user.js";
 
 export const registerUser = async (req, res) => {
@@ -131,3 +132,19 @@ export const getUser = async (req, res) => {
     id: user._id,
   });
 };
+
+export const getUserCommittedEvents = async (req, res) => {
+  const user = await User.findById(req.user);
+  res.json({ 
+    committedEvents: user.committedEvents, 
+    numCommittedEvents: user.numCommittedEvents,
+  });
+}
+
+export const commitGoal = async (req, res) => {
+  const {id} = req.params;
+  const user = await User.findByIdAndUpdate(req.user, { $push: {"committedEvents": id}, $inc: {"numCommittedEvents" : 1}});
+  const goal = await Goal.findByIdAndUpdate(id, { $push: { "committers": user._id }, $inc: { "numCommitters" : 1}}); //look at later - id
+  res.json({
+  });
+}
